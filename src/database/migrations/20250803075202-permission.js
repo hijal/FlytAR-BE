@@ -1,19 +1,27 @@
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Roles', {
+    await queryInterface.createTable('Permissions', {
       id: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
-      name: {
-        type: Sequelize.ENUM('super-admin', 'admin', 'user'),
+      tag: {
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+        comment: 'Format: resource:action (e.g., account:get, transaction:create)'
+      },
+      resource: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      action: {
+        type: Sequelize.ENUM('get', 'list', 'create', 'update', 'delete'),
+        allowNull: false
       },
       description: {
         type: Sequelize.STRING
@@ -30,6 +38,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Roles');
+    await queryInterface.dropTable('Permissions');
   }
 };
