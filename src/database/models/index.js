@@ -3,15 +3,14 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
-const process = require('process');
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
+const { env } = require('../../config/app');
 const config = require(__dirname + '/../../config/database.js')[env];
 const db = {};
 
 let sequelize = new Sequelize(config.database, config.username, config.password, {
   ...config,
-  logging: process.env.SEQUELIZE_LOGGING ? console.log : false
+  logging: env === 'development' ? console.log : false
 });
 
 fs.readdirSync(__dirname)

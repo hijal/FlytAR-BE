@@ -1,8 +1,8 @@
+const { Op } = require('sequelize');
+const { jwt } = require('../config/app');
+const { signToken } = require('../middleware/auth');
 const { User, Token } = require('../database/models');
 const { AppError } = require('../middleware/errorHandler');
-const { signToken } = require('../middleware/auth');
-const { jwt } = require('../config/app');
-const { Op } = require('sequelize');
 
 class UserService {
   static async getAllUsers(query) {
@@ -58,21 +58,6 @@ class UserService {
       throw new AppError('You do not have permission to update this user', 401);
     }
     return await user.update(userData);
-  }
-
-  static async deleteUser(id, currentUserId) {
-    const user = await User.findByPk(id);
-    if (!user) {
-      throw new AppError('No user found with that ID', 404);
-    }
-    if (user.id === currentUserId) {
-      throw new AppError('You cannot delete yourself', 401);
-    }
-    if (user.id !== currentUserId) {
-      throw new AppError('You do not have permission to delete this user', 401);
-    }
-    await user.destroy();
-    return null;
   }
 
   static async login(email, password) {

@@ -1,5 +1,5 @@
 const UserService = require('../services/userService');
-const { jwt } = require('../config/app');
+const { jwt, env } = require('../config/app');
 
 const getAllUsers = async (req, res, next) => {
   try {
@@ -49,18 +49,6 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-const deleteUser = async (req, res, next) => {
-  try {
-    await UserService.deleteUser(req.params.id, req.user.id);
-    res.status(204).json({
-      status: 'success',
-      data: null
-    });
-  } catch (error) {
-    next(error);
-  }
-};
-
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -70,7 +58,7 @@ const login = async (req, res, next) => {
       expires: new Date(Date.now() + jwt.expireIn),
       httpOnly: true
     };
-    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+    if (env === 'production') cookieOptions.secure = true;
 
     res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
@@ -99,7 +87,6 @@ module.exports = {
   getUser,
   createUser,
   updateUser,
-  deleteUser,
   login,
   getMe
 };

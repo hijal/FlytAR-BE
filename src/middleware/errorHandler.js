@@ -1,4 +1,5 @@
 const { ValidationError, DatabaseError, ConnectionError } = require('sequelize');
+const { env } = require('../config/app');
 
 class AppError extends Error {
   constructor(message, statusCode) {
@@ -166,7 +167,7 @@ const globalErrorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  if (process.env.NODE_ENV === 'development') {
+  if (env === 'development') {
     console.error(err);
     const processedError = processError(err);
     sendErrorDev(processedError, res);
