@@ -6,6 +6,11 @@ const { v4: uuidv4 } = require('uuid');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
+      User.belongsTo(models.Role, {
+        foreignKey: 'roleId',
+        as: 'role'
+      });
+
       User.hasOne(models.Token, {
         foreignKey: 'userId',
         as: 'token',
@@ -19,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
 
     async getCurrentToken() {
       return this.getToken();
+    }
+
+    async getUserRole() {
+      return this.getRole();
     }
 
     toJSON() {

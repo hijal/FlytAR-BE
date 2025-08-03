@@ -1,0 +1,56 @@
+const RoleService = require('../services/roleService');
+
+const getAllRoles = async (req, res, next) => {
+  try {
+    const result = await RoleService.getAllRoles();
+    res.status(200).json({
+      status: 'success',
+      ...result
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const createRole = async (req, res, next) => {
+  try {
+    const role = await RoleService.createRole(req.body);
+    res.status(201).json({
+      status: 'success',
+      data: { role }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateRole = async (req, res, next) => {
+  try {
+    const role = await RoleService.updateRole(req.params.id, req.body);
+    res.status(200).json({
+      status: 'success',
+      data: { role }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteRole = async (req, res, next) => {
+  try {
+    await RoleService.deleteRole(req.params.id);
+    res.status(204).json({
+      status: 'success',
+      data: null
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  getAllRoles,
+  createRole,
+  updateRole,
+  deleteRole
+};

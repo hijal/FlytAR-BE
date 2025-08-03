@@ -37,10 +37,10 @@ module.exports = {
       }
     });
 
-    await queryInterface.addIndex('tokens', ['userId']);
-    await queryInterface.addIndex('tokens', ['expires_at']);
+    await queryInterface.addIndex('Tokens', ['userId']);
+    await queryInterface.addIndex('Tokens', ['expires_at']);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('tokens');
+    await queryInterface.dropTable('Tokens');
   }
 };

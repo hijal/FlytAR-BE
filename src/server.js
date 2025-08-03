@@ -52,11 +52,6 @@ const startServer = async () => {
     await sequelize.authenticate();
     console.log('Database connected successfully');
 
-    if (env === 'development') {
-      await sequelize.sync({ alter: true });
-      console.log('Database synchronized');
-    }
-
     app.listen(PORT, () => {
       console.log(`Server running on port: ${PORT}`);
       console.log(`Environment: ${env}`);

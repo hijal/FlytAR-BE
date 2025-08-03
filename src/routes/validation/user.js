@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { AppError } = require('./errorHandler');
+const { AppError } = require('../../middleware/errorHandler');
 
 const userValidationSchema = {
   create: Joi.object({
