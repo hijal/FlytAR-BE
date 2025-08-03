@@ -27,18 +27,18 @@ const protect = async (req, res, next) => {
 
     const currentUser = await User.findByPk(decoded.id);
 
-    const currentToken = await currentUser.getCurrentToken();
-
-    if (currentToken.token !== token) {
-      return next(new AppError('The user belonging to this token no longer exists', 401));
-    }
-
     if (!currentUser) {
       return next(new AppError('The user belonging to this token no longer exists', 401));
     }
 
     if (!currentUser.isActive) {
       return next(new AppError('Your account has been deactivated', 401));
+    }
+
+    const currentToken = await currentUser.getCurrentToken();
+
+    if (currentToken.token !== token) {
+      return next(new AppError('The user belonging to this token no longer exists', 401));
     }
 
     req.user = currentUser;

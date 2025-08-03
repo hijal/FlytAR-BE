@@ -38,7 +38,6 @@ module.exports = {
       },
       roleId: {
         type: Sequelize.UUID,
-        allowNull: false,
         references: {
           model: 'Roles',
           key: 'id'

@@ -74,7 +74,8 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         references: {
           model: 'Users',
-          key: 'id'
+          key: 'id',
+          onDelete: 'CASCADE'
         },
         validate: {
           notEmpty: {
@@ -86,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Token',
-      tableName: 'tokens',
+      tableName: 'Tokens',
       timestamps: true,
       indexes: [
         {
