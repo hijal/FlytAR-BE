@@ -1,26 +1,12 @@
 const { Op } = require('sequelize');
 const { jwt } = require('../config/app');
 const { signToken } = require('../middleware/auth');
-const { User, Token, Role, Permission } = require('../database/models');
+const { User, Token, Role, Company } = require('../database/models');
 const { AppError } = require('../middleware/errorHandler');
 
 class UserService {
-  static async getAllUsers(query) {
-    const { page = 1, limit = 10, search, isActive } = query;
-    const offset = (page - 1) * limit;
-    const whereClause = {};
-
-    if (search) {
-      whereClause[Op.or] = [
-        { firstName: { [Op.iLike]: `%${search}%` } },
-        { lastName: { [Op.iLike]: `%${search}%` } },
-        { email: { [Op.iLike]: `%${search}%` } }
-      ];
-    }
-    if (isActive !== undefined) whereClause.isActive = isActive;
-
+  static async getAllUsers() {
     const users = await User.findAll({
-      include: [{ model: Role, as: 'role' }],
       order: [['created_at', 'DESC']]
     });
 
@@ -32,7 +18,15 @@ class UserService {
   }
 
   static async getUserById(id) {
-    const user = await User.findByPk(id);
+    const user = await User.findByPk(id, {
+      include: [
+        { model: Role, as: 'role' },
+        {
+          model: Company,
+          as: 'companies'
+        }
+      ]
+    });
     if (!user) {
       throw new AppError('No user found with that ID', 404);
     }

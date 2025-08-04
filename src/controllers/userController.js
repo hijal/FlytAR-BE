@@ -3,7 +3,7 @@ const { jwt, env } = require('../config/app');
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const result = await UserService.getAllUsers(req.query);
+    const result = await UserService.getAllUsers();
     res.status(200).json({
       status: 'success',
       ...result

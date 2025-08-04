@@ -137,11 +137,17 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      companyId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        field: 'company_id'
-      },
+      // companyId: {
+      //   type: DataTypes.INTEGER,
+      //   allowNull: true,
+      //   references: {
+      //     model: 'companies',
+      //     key: 'id'
+      //   },
+      //   onUpdate: 'CASCADE',
+      //   onDelete: 'RESTRICT',
+      //   field: 'company_id'
+      // },
       invitedBy: {
         type: DataTypes.INTEGER,
         allowNull: true,

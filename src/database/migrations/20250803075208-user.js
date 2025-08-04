@@ -58,10 +58,16 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      company_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
+      // company_id: {
+      //   type: Sequelize.INTEGER,
+      //   allowNull: true,
+      //   references: {
+      //     model: 'companies',
+      //     key: 'id'
+      //   },
+      //   onUpdate: 'CASCADE',
+      //   onDelete: 'RESTRICT'
+      // },
       invited_by: {
         type: Sequelize.INTEGER,
         allowNull: true
@@ -83,7 +89,7 @@ module.exports = {
     await queryInterface.addIndex('users', ['phone']);
     await queryInterface.addIndex('users', ['user_key']);
     await queryInterface.addIndex('users', ['role_id']);
-    await queryInterface.addIndex('users', ['company_id']);
+    // await queryInterface.addIndex('users', ['company_id']);
     await queryInterface.addIndex('users', ['invited_by']);
   },
 
