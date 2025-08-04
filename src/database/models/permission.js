@@ -1,3 +1,4 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -5,7 +6,8 @@ module.exports = (sequelize) => {
     static associate(models) {
       Permission.belongsToMany(models.Role, {
         through: models.RolePermission,
-        foreignKey: 'permissionId',
+        foreignKey: 'permission_id',
+        otherKey: 'role_id',
         as: 'roles'
       });
     }
@@ -19,11 +21,12 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false
       },
-      per_key: {
+      perKey: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        unique: true
+        unique: true,
+        defaultValue: DataTypes.UUIDV4,
+        field: 'per_key'
       },
       tag: {
         type: DataTypes.STRING,
@@ -76,7 +79,7 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'Permission',
-      tableName: 'Permissions',
+      tableName: 'permissions',
       timestamps: true,
       underscored: true
     }

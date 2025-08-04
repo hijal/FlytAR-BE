@@ -4,31 +4,31 @@ module.exports = (sequelize) => {
   class RolePermission extends Model {
     static associate(models) {
       RolePermission.belongsTo(models.Role, {
-        foreignKey: 'roleId'
+        foreignKey: 'role_id'
       });
 
       RolePermission.belongsTo(models.Permission, {
-        foreignKey: 'permissionId'
+        foreignKey: 'permission_id'
       });
     }
   }
 
   RolePermission.init(
     {
-      roleId: {
+      role_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
-          model: 'Roles',
+          model: 'roles',
           key: 'id'
         },
         onDelete: 'CASCADE'
       },
-      permissionId: {
+      permission_id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
-          model: 'Permissions',
+          model: 'permissions',
           key: 'id'
         },
         onDelete: 'CASCADE'
@@ -37,8 +37,10 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'RolePermission',
-      tableName: 'RolePermissions',
-      timestamps: true
+      tableName: 'role_permissions',
+      timestamps: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
     }
   );
 

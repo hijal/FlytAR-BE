@@ -4,7 +4,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -16,11 +16,11 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         allowNull: false
       },
-      firstName: {
+      first_name: {
         type: Sequelize.STRING(50),
         allowNull: false
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING(50),
         allowNull: false
       },
@@ -37,22 +37,22 @@ module.exports = {
         type: Sequelize.STRING(15),
         unique: true
       },
-      profilePicture: {
+      profile_picture: {
         type: Sequelize.STRING(255),
         defaultValue: ''
       },
-      isActive: {
+      is_active: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
       },
-      lastLogin: {
+      last_login: {
         type: Sequelize.DATE,
         allowNull: true
       },
-      roleId: {
+      role_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Roles',
+          model: 'roles',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -62,30 +62,32 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      invitedBy: {
+      invited_by: {
         type: Sequelize.INTEGER,
         allowNull: true
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     });
 
-    // indexes
-    await queryInterface.addIndex('Users', ['email']);
-    await queryInterface.addIndex('Users', ['phone']);
-    await queryInterface.addIndex('Users', ['user_key']);
-    await queryInterface.addIndex('Users', ['roleId']);
-    await queryInterface.addIndex('Users', ['company_id']);
-    await queryInterface.addIndex('Users', ['invitedBy']);
+    // indexes (also snake_case)
+    await queryInterface.addIndex('users', ['email']);
+    await queryInterface.addIndex('users', ['phone']);
+    await queryInterface.addIndex('users', ['user_key']);
+    await queryInterface.addIndex('users', ['role_id']);
+    await queryInterface.addIndex('users', ['company_id']);
+    await queryInterface.addIndex('users', ['invited_by']);
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('users');
   }
 };

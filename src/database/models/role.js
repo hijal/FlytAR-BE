@@ -1,15 +1,17 @@
+'use strict';
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Role extends Model {
     static associate(models) {
       Role.hasMany(models.User, {
-        foreignKey: 'roleId',
+        foreignKey: 'role_id',
         as: 'users'
       });
       Role.belongsToMany(models.Permission, {
         through: models.RolePermission,
-        foreignKey: 'roleId',
+        foreignKey: 'role_id',
+        otherKey: 'permission_id',
         as: 'permissions'
       });
     }
@@ -23,11 +25,12 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false
       },
-      role_key: {
+      roleKey: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        unique: true
+        defaultValue: DataTypes.UUIDV4,
+        unique: true,
+        field: 'role_key'
       },
       name: {
         type: DataTypes.ENUM('Super Admin', 'Company Admin', 'Surveyor', 'Mover', 'Customer'),
@@ -57,9 +60,9 @@ module.exports = (sequelize) => {
     {
       sequelize,
       modelName: 'Role',
-      tableName: 'Roles',
+      tableName: 'roles',
       timestamps: true,
-      underscored: true,
+      underscored: true
     }
   );
 

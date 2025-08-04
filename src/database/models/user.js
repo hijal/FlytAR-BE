@@ -1,17 +1,16 @@
 'use strict';
 const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
-const { v4: uuidv4 } = require('uuid');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.belongsTo(models.Role, {
-        foreignKey: 'roleId',
+        foreignKey: 'role_id',
         as: 'role'
       });
       User.hasOne(models.Token, {
-        foreignKey: 'userId',
+        foreignKey: 'user_id',
         as: 'token',
         onDelete: 'CASCADE'
       });
@@ -44,15 +43,17 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false
       },
-      user_key: {
+      userKey: {
         type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        unique: true
+        defaultValue: DataTypes.UUIDV4,
+        unique: true,
+        field: 'user_key'
       },
       firstName: {
         type: DataTypes.STRING(50),
         allowNull: false,
+        field: 'first_name',
         validate: {
           notEmpty: {
             msg: 'First name cannot be empty'
@@ -66,6 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       lastName: {
         type: DataTypes.STRING(50),
         allowNull: false,
+        field: 'last_name',
         validate: {
           notEmpty: {
             msg: 'Last name cannot be empty'
@@ -106,42 +108,50 @@ module.exports = (sequelize, DataTypes) => {
       profilePicture: {
         type: DataTypes.STRING(255),
         defaultValue: '',
-        allowNull: false
+        allowNull: false,
+        field: 'profile_picture'
       },
       isActive: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-        allowNull: false
+        allowNull: false,
+        field: 'is_active'
       },
       lastLogin: {
         type: DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
+        field: 'last_login'
       },
       roleId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'role_id',
         references: {
-          model: 'Roles',
+          model: 'roles',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      company_id: {
+      companyId: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: true,
+        field: 'company_id'
       },
       invitedBy: {
         type: DataTypes.INTEGER,
-        allowNull: true
+        allowNull: true,
+        field: 'invited_by'
       }
     },
     {
       sequelize,
       modelName: 'User',
-      tableName: 'Users',
+      tableName: 'users',
       timestamps: true,
       underscored: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       hooks: {
         beforeCreate: async (user) => {
           if (user.password) {
@@ -156,5 +166,6 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   );
+
   return User;
 };

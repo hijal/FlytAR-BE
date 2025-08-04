@@ -4,7 +4,7 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Tokens', {
+    await queryInterface.createTable('tokens', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -24,33 +24,36 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-     created_at: {
+      created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
-      userId: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id',
-          as: 'userId'
+          model: 'users',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       }
     });
 
-    await queryInterface.addIndex('Tokens', ['userId']);
-    await queryInterface.addIndex('Tokens', ['token_key']);
-    await queryInterface.addIndex('Tokens', ['token']);
-    await queryInterface.addIndex('Tokens', ['expires_at']);
+    // indexes
+    await queryInterface.addIndex('tokens', ['user_id']);
+    await queryInterface.addIndex('tokens', ['token_key']);
+    await queryInterface.addIndex('tokens', ['token']);
+    await queryInterface.addIndex('tokens', ['expires_at']);
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Tokens');
+
+  async down(queryInterface) {
+    await queryInterface.dropTable('tokens');
   }
 };

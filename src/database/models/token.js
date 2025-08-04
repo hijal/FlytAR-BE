@@ -1,12 +1,11 @@
 'use strict';
 const { Model } = require('sequelize');
-const { v4: uuidv4 } = require('uuid');
 
 module.exports = (sequelize, DataTypes) => {
   class Token extends Model {
     static associate(models) {
       Token.belongsTo(models.User, {
-        foreignKey: 'userId',
+        foreignKey: 'user_id',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
         as: 'user'
@@ -22,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     isRequestTokenUserMatched(userId) {
-      return this.userId === userId;
+      return this.user_id === userId;
     }
 
     timeUntilExpiration() {
@@ -45,11 +44,12 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         allowNull: false
       },
-      token_key: {
+      tokenKey: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        unique: true
+        unique: true,
+        field: 'token_key'
       },
       token: {
         type: DataTypes.STRING,
@@ -60,9 +60,10 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
-      expires_at: {
+      expiresAt: {
         type: DataTypes.DATE,
         allowNull: false,
+        field: 'expires_at',
         validate: {
           isDate: {
             msg: 'Must be a valid date'
@@ -73,11 +74,11 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
-      userId: {
+      user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'users',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -92,16 +93,16 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Token',
-      tableName: 'Tokens',
+      tableName: 'tokens',
       timestamps: true,
       underscored: true,
       hooks: {
         beforeValidate: (token) => {
-          // Set default 1d
-          if (!token.expires_at) {
+          // default 1d
+          if (!token.expiresAt) {
             const expiration = new Date();
             expiration.setHours(expiration.getHours() + 24);
-            token.expires_at = expiration;
+            token.expiresAt = expiration;
           }
         }
       }

@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Permissions', {
+    await queryInterface.createTable('permissions', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -30,26 +30,30 @@ module.exports = {
         allowNull: false
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: true
       },
       created_at: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updated_at: {
         allowNull: false,
-        type: Sequelize.DATE
-      },
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      }
     });
+
     // indexes
-    await queryInterface.addIndex('Permissions', ['id']);
-    await queryInterface.addIndex('Permissions', ['per_key']);
-    await queryInterface.addIndex('Permissions', ['tag']);
-    await queryInterface.addIndex('Permissions', ['resource']);
-    await queryInterface.addIndex('Permissions', ['action']);
+    await queryInterface.addIndex('permissions', ['id']);
+    await queryInterface.addIndex('permissions', ['per_key']);
+    await queryInterface.addIndex('permissions', ['tag']);
+    await queryInterface.addIndex('permissions', ['resource']);
+    await queryInterface.addIndex('permissions', ['action']);
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('Permissions');
+    await queryInterface.dropTable('permissions');
   }
 };
