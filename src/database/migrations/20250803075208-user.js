@@ -1,7 +1,6 @@
 'use strict';
 
 /** @type {import('sequelize-cli').Migration} */
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('users', {
@@ -14,7 +13,8 @@ module.exports = {
       user_key: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       first_name: {
         type: Sequelize.STRING(50),

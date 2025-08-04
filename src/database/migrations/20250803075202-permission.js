@@ -13,7 +13,8 @@ module.exports = {
       per_key: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       tag: {
         type: Sequelize.STRING,

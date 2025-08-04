@@ -13,7 +13,8 @@ module.exports = {
       role_key: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       name: {
         type: Sequelize.ENUM('Super Admin', 'Company Admin', 'Surveyor', 'Mover', 'Customer'),

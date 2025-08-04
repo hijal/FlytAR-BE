@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
         as: 'token',
         onDelete: 'CASCADE'
       });
+      User.hasMany(models.Company, {
+        foreignKey: 'createdBy',
+        as: 'companies'
+      });
     }
 
     async checkPassword(password) {

@@ -4,7 +4,7 @@ const { AppError } = require('../middleware/errorHandler');
 class PermissionService {
   static async getAllPermissions() {
     const permissions = await Permission.findAll({
-      order: [['createdAt', 'DESC']]
+      order: [['created_at', 'DESC']]
     });
 
     return {

@@ -96,6 +96,8 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'tokens',
       timestamps: true,
       underscored: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       hooks: {
         beforeValidate: (token) => {
           // default 1d
