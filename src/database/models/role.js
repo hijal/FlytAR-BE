@@ -15,6 +15,16 @@ module.exports = (sequelize) => {
         as: 'permissions'
       });
     }
+
+    toJSON() {
+      const values = { ...this.get() };
+      Object.keys(values).forEach((key) => {
+        if (key.includes('_')) {
+          delete values[key];
+        }
+      });
+      return values;
+    }
   }
 
   Role.init(
@@ -62,9 +72,7 @@ module.exports = (sequelize) => {
       modelName: 'Role',
       tableName: 'roles',
       timestamps: true,
-      underscored: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
+      underscored: true
     }
   );
 

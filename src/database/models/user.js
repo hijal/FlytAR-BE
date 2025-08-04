@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
     toJSON() {
       const values = { ...this.get() };
       delete values.password;
+      Object.keys(values).forEach((key) => {
+        if (key.includes('_')) {
+          delete values[key];
+        }
+      });
       return values;
     }
   }
@@ -160,8 +165,6 @@ module.exports = (sequelize, DataTypes) => {
       tableName: 'users',
       timestamps: true,
       underscored: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at',
       hooks: {
         beforeCreate: async (user) => {
           if (user.password) {

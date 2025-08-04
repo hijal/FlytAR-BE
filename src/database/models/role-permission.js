@@ -38,9 +38,7 @@ module.exports = (sequelize) => {
       sequelize,
       modelName: 'RolePermission',
       tableName: 'role_permissions',
-      timestamps: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at'
+      timestamps: true
     }
   );
 

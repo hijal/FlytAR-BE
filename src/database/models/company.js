@@ -12,6 +12,15 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE'
       });
     }
+    toJSON() {
+      const values = { ...this.get() };
+      Object.keys(values).forEach((key) => {
+        if (key.includes('_')) {
+          delete values[key];
+        }
+      });
+      return values;
+    }
   }
 
   Company.init(
@@ -95,9 +104,7 @@ module.exports = (sequelize) => {
       modelName: 'Company',
       tableName: 'companies',
       underscored: true,
-      timestamps: true,
-      createdAt: 'created_at',
-      updatedAt: 'updated_at'
+      timestamps: true
     }
   );
 

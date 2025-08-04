@@ -1,4 +1,3 @@
-const { Op } = require('sequelize');
 const { jwt } = require('../config/app');
 const { signToken } = require('../middleware/auth');
 const { User, Token, Role, Company } = require('../database/models');
