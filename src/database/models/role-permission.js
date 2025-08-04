@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
   RolePermission.init(
     {
       roleId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
           model: 'Roles',
@@ -25,7 +25,7 @@ module.exports = (sequelize) => {
         onDelete: 'CASCADE'
       },
       permissionId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         primaryKey: true,
         references: {
           model: 'Permissions',

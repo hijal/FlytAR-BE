@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Token.belongsTo(models.User, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
         as: 'user'
       });
     }
@@ -31,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
     async extendExpiration(hours) {
       const newExpiration = new Date();
       newExpiration.setHours(newExpiration.getHours() + hours);
-
       this.expires_at = newExpiration;
       return this.save();
     }
@@ -40,15 +40,20 @@ module.exports = (sequelize, DataTypes) => {
   Token.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: () => uuidv4(),
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false
+      },
+      token_key: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        unique: true
       },
       token: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
         validate: {
           notEmpty: {
             msg: 'Token value cannot be empty'
@@ -69,14 +74,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       userId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true,
         references: {
           model: 'Users',
-          key: 'id',
-          onDelete: 'CASCADE'
+          key: 'id'
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
         validate: {
           notEmpty: {
             msg: 'User ID cannot be empty'
@@ -89,19 +94,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Token',
       tableName: 'Tokens',
       timestamps: true,
-      indexes: [
-        {
-          unique: true,
-          fields: ['token']
-        },
-        {
-          fields: ['expires_at']
-        },
-        {
-          unique: true,
-          fields: ['userId']
-        }
-      ],
+      underscored: true,
       hooks: {
         beforeValidate: (token) => {
           // Set default 1d

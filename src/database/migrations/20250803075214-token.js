@@ -6,9 +6,14 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Tokens', {
       id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+      },
+      token_key: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
         allowNull: false
       },
       token: {
@@ -19,16 +24,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      createdAt: {
+     created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
       userId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',
@@ -41,6 +46,8 @@ module.exports = {
     });
 
     await queryInterface.addIndex('Tokens', ['userId']);
+    await queryInterface.addIndex('Tokens', ['token_key']);
+    await queryInterface.addIndex('Tokens', ['token']);
     await queryInterface.addIndex('Tokens', ['expires_at']);
   },
   async down(queryInterface, Sequelize) {

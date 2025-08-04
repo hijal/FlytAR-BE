@@ -6,9 +6,14 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+      },
+      user_key: {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
-        primaryKey: true,
         allowNull: false
       },
       firstName: {
@@ -28,6 +33,14 @@ module.exports = {
         type: Sequelize.STRING(255),
         allowNull: false
       },
+      phone: {
+        type: Sequelize.STRING(15),
+        unique: true
+      },
+      profilePicture: {
+        type: Sequelize.STRING(255),
+        defaultValue: ''
+      },
       isActive: {
         type: Sequelize.BOOLEAN,
         defaultValue: true
@@ -37,7 +50,7 @@ module.exports = {
         allowNull: true
       },
       roleId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         references: {
           model: 'Roles',
           key: 'id'
@@ -45,11 +58,19 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      createdAt: {
+      company_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      invitedBy: {
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
@@ -57,6 +78,11 @@ module.exports = {
 
     // indexes
     await queryInterface.addIndex('Users', ['email']);
+    await queryInterface.addIndex('Users', ['phone']);
+    await queryInterface.addIndex('Users', ['user_key']);
+    await queryInterface.addIndex('Users', ['roleId']);
+    await queryInterface.addIndex('Users', ['company_id']);
+    await queryInterface.addIndex('Users', ['invitedBy']);
   },
 
   async down(queryInterface, Sequelize) {

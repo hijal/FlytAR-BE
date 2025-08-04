@@ -14,33 +14,71 @@ module.exports = (sequelize) => {
   Permission.init(
     {
       id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false
+      },
+      per_key: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true
+        allowNull: false,
+        unique: true
       },
       tag: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        comment: 'Format: resource:action (e.g., account:get, transaction:create)'
+        comment: 'Format: resource:action (e.g., user:get, company:create)',
+        validate: {
+          notEmpty: {
+            msg: 'Permission tag cannot be empty'
+          },
+          is: {
+            args: /^[a-z]+:[a-z]+$/i,
+            msg: 'Permission tag must be in format "resource:action"'
+          }
+        }
       },
       resource: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Resource cannot be empty'
+          }
+        }
       },
       action: {
         type: DataTypes.ENUM('get', 'list', 'create', 'update', 'delete'),
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: 'Action cannot be empty'
+          },
+          isIn: {
+            args: [['get', 'list', 'create', 'update', 'delete']],
+            msg: 'Invalid action value'
+          }
+        }
       },
       description: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: true,
+        validate: {
+          len: {
+            args: [0, 255],
+            msg: 'Description must be less than 255 characters'
+          }
+        }
       }
     },
     {
       sequelize,
       modelName: 'Permission',
       tableName: 'Permissions',
-      timestamps: true
+      timestamps: true,
+      underscored: true
     }
   );
 

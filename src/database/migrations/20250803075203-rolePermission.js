@@ -6,7 +6,7 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('RolePermissions', {
       roleId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
           model: 'Roles',
@@ -15,7 +15,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       permissionId: {
-        type: Sequelize.UUID,
+        type: Sequelize.INTEGER,
         primaryKey: true,
         references: {
           model: 'Permissions',
@@ -23,15 +23,18 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
     });
+    // indexes
+    await queryInterface.addIndex('RolePermissions', ['roleId']);
+    await queryInterface.addIndex('RolePermissions', ['permissionId']);
   },
 
   async down(queryInterface) {

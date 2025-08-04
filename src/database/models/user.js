@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'roleId',
         as: 'role'
       });
-
       User.hasOne(models.Token, {
         foreignKey: 'userId',
         as: 'token',
@@ -40,10 +39,16 @@ module.exports = (sequelize, DataTypes) => {
   User.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: () => uuidv4(),
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false
+      },
+      user_key: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        unique: true
       },
       firstName: {
         type: DataTypes.STRING(50),
@@ -93,12 +98,41 @@ module.exports = (sequelize, DataTypes) => {
           }
         }
       },
+      phone: {
+        type: DataTypes.STRING(15),
+        unique: true,
+        allowNull: true
+      },
+      profilePicture: {
+        type: DataTypes.STRING(255),
+        defaultValue: '',
+        allowNull: false
+      },
       isActive: {
         type: DataTypes.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
+        allowNull: false
       },
       lastLogin: {
         type: DataTypes.DATE,
+        allowNull: true
+      },
+      roleId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Roles',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT'
+      },
+      company_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
+      invitedBy: {
+        type: DataTypes.INTEGER,
         allowNull: true
       }
     },
@@ -107,6 +141,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'User',
       tableName: 'Users',
       timestamps: true,
+      underscored: true,
       hooks: {
         beforeCreate: async (user) => {
           if (user.password) {
@@ -121,6 +156,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   );
-
   return User;
 };
