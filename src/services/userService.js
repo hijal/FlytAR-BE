@@ -20,11 +20,8 @@ class UserService {
     if (isActive !== undefined) whereClause.isActive = isActive;
 
     const users = await User.findAll({
-      include: [
-        { model: Role, as: 'role' },
-        { model: Permission, as: 'permissions' }
-      ],
-      order: [['createdAt', 'DESC']]
+      include: [{ model: Role, as: 'role' }],
+      order: [['created_at', 'DESC']]
     });
 
     return {
