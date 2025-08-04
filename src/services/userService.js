@@ -1,7 +1,7 @@
 const { Op } = require('sequelize');
 const { jwt } = require('../config/app');
 const { signToken } = require('../middleware/auth');
-const { User, Token } = require('../database/models');
+const { User, Token, Role, Permission } = require('../database/models');
 const { AppError } = require('../middleware/errorHandler');
 
 class UserService {
@@ -19,20 +19,17 @@ class UserService {
     }
     if (isActive !== undefined) whereClause.isActive = isActive;
 
-    const { count, rows } = await User.findAndCountAll({
-      where: whereClause,
-      limit: parseInt(limit),
-      offset: parseInt(offset),
+    const users = await User.findAll({
+      include: [
+        { model: Role, as: 'role' },
+        { model: Permission, as: 'permissions' }
+      ],
       order: [['createdAt', 'DESC']]
     });
 
     return {
-      results: rows.length,
-      totalCount: count,
-      totalPages: Math.ceil(count / limit),
-      currentPage: parseInt(page),
       data: {
-        users: rows
+        users
       }
     };
   }

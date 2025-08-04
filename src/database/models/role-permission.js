@@ -2,7 +2,15 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class RolePermission extends Model {
-    static associate(models) {}
+    static associate(models) {
+      RolePermission.belongsTo(models.Role, {
+        foreignKey: 'roleId'
+      });
+
+      RolePermission.belongsTo(models.Permission, {
+        foreignKey: 'permissionId'
+      });
+    }
   }
 
   RolePermission.init(
