@@ -71,13 +71,13 @@ class UserService {
     const userToken = await user.getCurrentToken();
 
     if (userToken) {
-      await Token.destroy({ where: { userId: user.id } });
+      await Token.destroy({ where: { user_id: user.id } });
     }
 
     await Token.create({
       token,
       expires_at: new Date(Date.now() + jwt.expireIn),
-      userId: user.id
+      user_id: user.id
     });
 
     return { token, user };
