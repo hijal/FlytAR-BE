@@ -7,11 +7,13 @@ const userRoutes = require('./user');
 const roleRoutes = require('./role');
 const permissionRoutes = require('./permission');
 const companyRoutes = require('./company');
+const leadRoutes = require('./lead');
 
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/roles', roleRoutes);
 router.use('/permissions', permissionRoutes);
 router.use('/companies', companyRoutes);
+router.use('/leads', leadRoutes);
 
 module.exports = router;

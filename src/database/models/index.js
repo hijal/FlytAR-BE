@@ -8,8 +8,22 @@ const { env } = require('../../config/app');
 const config = require(__dirname + '/../../config/database.js')[env];
 const db = {};
 
+const connection_options = {
+  dialectOptions: {}
+};
+
+if (env === 'production') {
+  connection_options.dialectOptions = {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
+  };
+}
+
 let sequelize = new Sequelize(config.database, config.username, config.password, {
   ...config,
+  ...connection_options,
   logging: env === 'development' ? console.log : false
 });
 
