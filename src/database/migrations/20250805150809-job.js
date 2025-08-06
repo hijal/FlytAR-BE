@@ -90,7 +90,7 @@ module.exports = {
         defaultValue: 'scheduled'
       },
       estimated_hours: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: true
       },
       total_price: {

@@ -13,12 +13,20 @@ const jobValidationSchema = {
     customerName: Joi.string().max(100).required().messages({
       'string.empty': 'Customer name is required'
     }),
-    customerEmail: Joi.string().email().optional(),
-    customerPhone: Joi.string().max(15).optional(),
+    customerEmail: Joi.string().email().required().messages({
+      'string.email': 'Customer email must be a valid email address',
+      'any.required': 'Customer email is required'
+    }),
+    customerPhone: Joi.string().max(15).required().messages({
+      'string.empty': 'Customer phone is required',
+      'string.max': 'Customer phone must be at most 15 characters long'
+    }),
     pickupAddress: Joi.string().required().messages({
       'string.empty': 'Pickup address is required'
     }),
-    deliveryAddress: Joi.string().optional(),
+    deliveryAddress: Joi.string().required().messages({
+      'string.empty': 'Delivery address is required'
+    }),
     jobDate: Joi.date().required().messages({
       'date.base': 'Job date must be a valid date',
       'any.required': 'Job date is required'

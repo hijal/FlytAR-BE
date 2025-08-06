@@ -140,7 +140,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 'scheduled'
       },
       estimatedHours: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: true,
         field: 'estimated_hours'
       },
