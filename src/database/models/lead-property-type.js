@@ -5,8 +5,8 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class PropertyType extends Model {
     static associate(models) {
-      PropertyType.belongsTo(models.Lead, {
-        foreignKey: 'propertyType',
+      PropertyType.hasMany(models.Lead, {
+        foreignKey: 'property_type_id',
         as: 'lead',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
@@ -35,11 +35,6 @@ module.exports = (sequelize) => {
       description: {
         type: DataTypes.STRING,
         allowNull: true
-      },
-      companyId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        field: 'company_id'
       }
     },
     {

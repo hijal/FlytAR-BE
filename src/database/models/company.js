@@ -11,6 +11,13 @@ module.exports = (sequelize) => {
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE'
       });
+
+      Company.hasMany(models.Lead, {
+        foreignKey: 'assigned_to_company_id',
+        as: 'leads',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
     }
     toJSON() {
       const values = { ...this.get() };

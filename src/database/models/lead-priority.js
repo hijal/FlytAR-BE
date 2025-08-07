@@ -5,8 +5,8 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class LeadPriority extends Model {
     static associate(models) {
-      LeadPriority.belongsTo(models.Lead, {
-        foreignKey: 'priority',
+      LeadPriority.hasMany(models.Lead, {
+        foreignKey: 'priority_id',
         as: 'lead',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'

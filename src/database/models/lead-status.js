@@ -5,8 +5,8 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class LeadStatus extends Model {
     static associate(models) {
-      LeadStatus.belongsTo(models.Lead, {
-        foreignKey: 'status',
+      LeadStatus.hasMany(models.Lead, {
+        foreignKey: 'status_id',
         as: 'lead',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'

@@ -5,37 +5,37 @@ module.exports = (sequelize, DataTypes) => {
   class Lead extends Model {
     static associate(models) {
       Lead.belongsTo(models.Company, {
-        foreignKey: 'assignedToCompanyId',
+        foreignKey: 'assigned_to_company_id',
         as: 'assignedCompany'
       });
 
       Lead.belongsTo(models.User, {
-        foreignKey: 'assignedToEmployeeId',
+        foreignKey: 'assigned_to_employee_id',
         as: 'assignedEmployee'
       });
 
       Lead.belongsTo(models.User, {
-        foreignKey: 'assignedBy',
+        foreignKey: 'assigned_by',
         as: 'assigner'
       });
 
-      Lead.hasOne(models.LeadSource, {
-        foreignKey: 'source',
+      Lead.belongsTo(models.LeadSource, {
+        foreignKey: 'source_id',
         as: 'source'
       });
 
-      Lead.hasOne(models.PropertyType, {
-        foreignKey: 'propertyType',
+      Lead.belongsTo(models.PropertyType, {
+        foreignKey: 'property_type_id',
         as: 'propertyType'
       });
 
-      Lead.hasOne(models.LeadStatus, {
-        foreignKey: 'status',
+      Lead.belongsTo(models.LeadStatus, {
+        foreignKey: 'status_id',
         as: 'status'
       });
 
-      Lead.hasOne(models.LeadPriority, {
-        foreignKey: 'priority',
+      Lead.belongsTo(models.LeadPriority, {
+        foreignKey: 'priority_id',
         as: 'priority'
       });
     }
