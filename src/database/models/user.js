@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         as: 'token',
         onDelete: 'CASCADE'
       });
-      User.hasMany(models.Company, {
-        foreignKey: 'createdBy',
-        as: 'companies'
+      User.belongsTo(models.Company, {
+        foreignKey: 'company_id',
+        as: 'company'
       });
     }
 
@@ -134,6 +134,7 @@ module.exports = (sequelize, DataTypes) => {
       roleId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        defaultValue: 5,
         field: 'role_id',
         references: {
           model: 'roles',
@@ -142,17 +143,11 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
       },
-      // companyId: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: true,
-      //   references: {
-      //     model: 'companies',
-      //     key: 'id'
-      //   },
-      //   onUpdate: 'CASCADE',
-      //   onDelete: 'RESTRICT',
-      //   field: 'company_id'
-      // },
+      companyId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        field: 'company_id'
+      },
       invitedBy: {
         type: DataTypes.INTEGER,
         allowNull: true,

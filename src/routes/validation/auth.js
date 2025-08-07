@@ -10,8 +10,8 @@ const userValidationSchema = {
     phone: Joi.string().optional(),
     profilePicture: Joi.string().uri().optional(),
     roleId: Joi.number().integer().optional(),
-    company_id: Joi.number().integer().optional(),
-    invitedBy: Joi.number().integer().optional()
+    companyId: Joi.number().integer().optional(),
+    invitedBy: Joi.number().integer().optional(),
   }),
 
   update: Joi.object({
@@ -23,7 +23,7 @@ const userValidationSchema = {
     profilePicture: Joi.string().uri(),
     isActive: Joi.boolean(),
     roleId: Joi.number().integer(),
-    company_id: Joi.number().integer(),
+    companyId: Joi.number().integer(),
     invitedBy: Joi.number().integer()
   }).min(1),
 

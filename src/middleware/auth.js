@@ -37,6 +37,10 @@ const protect = async (req, res, next) => {
 
     const currentToken = await currentUser.getCurrentToken();
 
+    if (!currentToken) {
+      return next(new AppError('The user belonging to this token no longer exists', 401));
+    }
+
     if (currentToken.token !== token) {
       return next(new AppError('The user belonging to this token no longer exists', 401));
     }

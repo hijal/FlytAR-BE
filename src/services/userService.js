@@ -22,7 +22,7 @@ class UserService {
         { model: Role, as: 'role' },
         {
           model: Company,
-          as: 'companies'
+          as: 'company'
         }
       ]
     });

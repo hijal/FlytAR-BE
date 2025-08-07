@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
   class Subscription extends Model {
     static associate(models) {
       Subscription.hasMany(models.Company, {
-        foreignKey: 'subscription',
+        foreignKey: 'subscription_id',
         as: 'companies',
         onDelete: 'RESTRICT',
         onUpdate: 'CASCADE'

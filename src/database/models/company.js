@@ -12,9 +12,30 @@ module.exports = (sequelize) => {
         onUpdate: 'CASCADE'
       });
 
+      Company.hasMany(models.User, {
+        foreignKey: 'company_id',
+        as: 'users',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
       Company.hasMany(models.Lead, {
         foreignKey: 'assigned_to_company_id',
         as: 'leads',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
+      });
+
+      Company.hasMany(models.Job, {
+        foreignKey: 'company_id',
+        as: 'jobs',
+        onDelete: 'RESTRICT',
+        onUpdate: 'CASCADE'
+      });
+
+      Company.belongsTo(models.Subscription, {
+        foreignKey: 'subscription_id',
+        as: 'subscription',
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       });
@@ -85,9 +106,10 @@ module.exports = (sequelize) => {
         defaultValue: true,
         field: 'is_active'
       },
-      subscription: {
+      subscriptionId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'subscription_id',
         defaultValue: 1,
         references: {
           model: 'subscriptions',

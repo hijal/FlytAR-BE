@@ -51,12 +51,17 @@ module.exports = {
       },
       role_id: {
         type: Sequelize.INTEGER,
+        defaultValue: 5,
         references: {
           model: 'roles',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT'
+      },
+      company_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       invited_by: {
         type: Sequelize.INTEGER,

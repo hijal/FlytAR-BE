@@ -17,7 +17,7 @@ class CompanyService {
 
   static async getCompanyById(id) {
     const company = await Company.findByPk(id, {
-      include: ['creator']
+      include: ['creator', 'jobs', 'leads', 'subscription', 'users']
     });
 
     if (!company) {
