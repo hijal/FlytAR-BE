@@ -134,9 +134,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         field: 'job_date'
       },
-      status: {
+      statusId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'status_id',
         references: {
           model: 'job_statuses',
           key: 'id'

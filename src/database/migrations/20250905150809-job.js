@@ -84,7 +84,7 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false
       },
-      status: {
+      status_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -121,7 +121,7 @@ module.exports = {
     await queryInterface.addIndex('jobs', ['assigned_surveyor_id']);
     await queryInterface.addIndex('jobs', ['assigned_mover_id']);
     await queryInterface.addIndex('jobs', ['job_date']);
-    await queryInterface.addIndex('jobs', ['status']);
+    await queryInterface.addIndex('jobs', ['status_id']);
   },
 
   async down(queryInterface, Sequelize) {

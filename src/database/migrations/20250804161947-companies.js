@@ -42,7 +42,7 @@ module.exports = {
         allowNull: false,
         defaultValue: true
       },
-      subscription: {
+      subscription_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

@@ -3,16 +3,16 @@ const { AppError } = require('../../middleware/errorHandler');
 
 const leadValidationSchema = {
   create: Joi.object({
-    source: Joi.string().max(100).optional().messages({
-      'string.max': 'Source must be at most 100 characters'
+    sourceId: Joi.number().integer().optional().messages({
+      'number.base': 'sourceId must be a number'
     }),
-    assignedToCompanyId: Joi.number().optional().messages({
+    assignedToCompanyId: Joi.number().integer().optional().messages({
       'number.base': 'assignedToCompanyId must be a number'
     }),
-    assignedToEmployeeId: Joi.number().optional().messages({
+    assignedToEmployeeId: Joi.number().integer().optional().messages({
       'number.base': 'assignedToEmployeeId must be a number'
     }),
-    assignedBy: Joi.number().optional().messages({
+    assignedBy: Joi.number().integer().optional().messages({
       'number.base': 'assignedBy must be a number',
       'any.required': 'assignedBy is required'
     }),
@@ -20,11 +20,11 @@ const leadValidationSchema = {
       'string.empty': 'Customer name is required',
       'string.max': 'Customer name must be at most 100 characters'
     }),
-    customerEmail: Joi.string().email().optional().messages({
+    customerEmail: Joi.string().email().required().messages({
       'string.email': 'Must be a valid email address'
     }),
-    customerPhone: Joi.string().max(15).optional().messages({
-      'string.max': 'Customer phone must be at most 15 characters'
+    customerPhone: Joi.string().max(20).required().messages({
+      'string.max': 'Customer phone must be at most 20 characters'
     }),
     pickupAddress: Joi.string().required().messages({
       'string.empty': 'Pickup address is required'
@@ -32,8 +32,9 @@ const leadValidationSchema = {
     deliveryAddress: Joi.string().required().messages({
       'string.empty': 'Delivery address is required'
     }),
-    propertyType: Joi.string().required().messages({
-      'string.empty': 'Property type is required'
+    propertyTypeId: Joi.number().integer().required().messages({
+      'number.base': 'Property type ID must be a number',
+      'any.required': 'Property type is required'
     }),
     residentsCount: Joi.number().integer().optional().messages({
       'number.base': 'Residents count must be a number'
@@ -42,32 +43,36 @@ const leadValidationSchema = {
       'date.base': 'Moving date must be a valid date',
       'any.required': 'Moving date is required'
     }),
-    estimatedPrice: Joi.number().optional(),
-    status: Joi.string().valid('new', 'contacted', 'converted', 'rejected').optional(),
-    priority: Joi.string().valid('low', 'medium', 'high', 'urgent').optional(),
+    estimatedPrice: Joi.number().required(),
+    statusId: Joi.number().integer().optional().messages({
+      'number.base': 'Status ID must be a number'
+    }),
+    priorityId: Joi.number().integer().optional().messages({
+      'number.base': 'Priority ID must be a number'
+    }),
     contactedAt: Joi.date().optional(),
     notes: Joi.string().optional()
   }),
 
   update: Joi.object({
-    source: Joi.string().max(100).optional(),
-    assignedToCompanyId: Joi.number().optional(),
-    assignedToEmployeeId: Joi.number().optional(),
-    assignedBy: Joi.number().optional(),
+    sourceId: Joi.number().integer().optional(),
+    assignedToCompanyId: Joi.number().integer().optional(),
+    assignedToEmployeeId: Joi.number().integer().optional(),
+    assignedBy: Joi.number().integer().optional(),
     customerName: Joi.string().max(100).optional(),
     customerEmail: Joi.string().email().optional(),
-    customerPhone: Joi.string().max(15).optional(),
+    customerPhone: Joi.string().max(20).optional(),
     pickupAddress: Joi.string().optional(),
     deliveryAddress: Joi.string().optional(),
-    propertyType: Joi.string().optional(),
+    propertyTypeId: Joi.number().integer().optional(),
     residentsCount: Joi.number().integer().optional(),
     movingDate: Joi.date().optional(),
     estimatedPrice: Joi.number().optional(),
-    status: Joi.string().valid('new', 'contacted', 'converted', 'rejected').optional(),
-    priority: Joi.string().valid('low', 'medium', 'high', 'urgent').optional(),
+    statusId: Joi.number().integer().optional().valid(1, 2, 3, 4),
+    priorityId: Joi.number().integer().optional().valid(1, 2, 3, 4),
     contactedAt: Joi.date().optional(),
     notes: Joi.string().optional(),
-    convertedToJobId: Joi.number().optional(),
+    convertedToJobId: Joi.number().integer().optional(),
     convertedAt: Joi.date().optional()
   }).min(1)
 };

@@ -18,8 +18,8 @@ const companyValidationSchema = {
     logoUrl: Joi.string().uri().optional().messages({
       'string.uri': 'Logo URL must be a valid URL'
     }),
-    subscription: Joi.string().valid('basic', 'premium', 'enterprise').optional().messages({
-      'any.only': 'Subscription must be one of basic, premium, or enterprise'
+    subscription: Joi.number().optional().messages({
+      'number.base': 'subscription must be a number'
     }),
     createdBy: Joi.number().required().messages({
       'number.base': 'createdBy must be a valid user ID',
@@ -34,7 +34,7 @@ const companyValidationSchema = {
     address: Joi.string().optional(),
     logoUrl: Joi.string().uri().optional(),
     isActive: Joi.boolean().optional(),
-    subscription: Joi.string().valid('basic', 'premium', 'enterprise').optional()
+    subscription: Joi.number().optional()
   }).min(1)
 };
 

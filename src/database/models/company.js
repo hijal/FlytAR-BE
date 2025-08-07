@@ -79,14 +79,12 @@ module.exports = (sequelize) => {
         field: 'is_active'
       },
       subscription: {
-        type: DataTypes.ENUM('basic', 'premium', 'enterprise'),
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 'basic',
-        validate: {
-          isIn: {
-            args: [['basic', 'premium', 'enterprise']],
-            msg: 'Subscription must be one of basic, premium, or enterprise'
-          }
+        defaultValue: 1,
+        references: {
+          model: 'subscriptions',
+          key: 'id'
         }
       },
       createdBy: {

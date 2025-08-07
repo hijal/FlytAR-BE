@@ -3,54 +3,44 @@ const { AppError } = require('../../middleware/errorHandler');
 
 const jobValidationSchema = {
   create: Joi.object({
-    companyId: Joi.number().required().messages({
+    companyId: Joi.number().integer().required().messages({
       'any.required': 'Company ID is required'
     }),
-    leadId: Joi.number().optional(),
-    customerId: Joi.number().optional(),
-    assignedSurveyorId: Joi.number().optional(),
-    assignedMoverId: Joi.number().optional(),
+    leadId: Joi.number().integer().allow(null).optional(),
+    customerId: Joi.number().integer().allow(null).optional(),
+    assignedSurveyorId: Joi.number().integer().allow(null).optional(),
+    assignedMoverId: Joi.number().integer().allow(null).optional(),
     customerName: Joi.string().max(100).required().messages({
       'string.empty': 'Customer name is required'
     }),
-    customerEmail: Joi.string().email().required().messages({
-      'string.email': 'Customer email must be a valid email address',
-      'any.required': 'Customer email is required'
-    }),
-    customerPhone: Joi.string().max(15).required().messages({
-      'string.empty': 'Customer phone is required',
-      'string.max': 'Customer phone must be at most 15 characters long'
-    }),
-    pickupAddress: Joi.string().required().messages({
-      'string.empty': 'Pickup address is required'
-    }),
-    deliveryAddress: Joi.string().required().messages({
-      'string.empty': 'Delivery address is required'
-    }),
+    customerEmail: Joi.string().email().allow(null).optional(),
+    customerPhone: Joi.string().max(20).allow(null).optional(),
+    pickupAddress: Joi.string().allow(null).optional(),
+    deliveryAddress: Joi.string().allow(null).optional(),
     jobDate: Joi.date().required().messages({
       'date.base': 'Job date must be a valid date',
       'any.required': 'Job date is required'
     }),
-    status: Joi.string().valid('pending', 'scheduled', 'in_progress', 'completed', 'cancelled').optional(),
-    estimatedHours: Joi.number().optional(),
-    totalPrice: Joi.number().optional()
+    statusId: Joi.number().integer().default(1).optional(),
+    estimatedHours: Joi.number().precision(2).allow(null).optional(),
+    totalPrice: Joi.number().precision(2).allow(null).optional()
   }),
 
   update: Joi.object({
-    companyId: Joi.number().optional(),
-    leadId: Joi.number().optional(),
-    customerId: Joi.number().optional(),
-    assignedSurveyorId: Joi.number().optional(),
-    assignedMoverId: Joi.number().optional(),
+    companyId: Joi.number().integer().optional(),
+    leadId: Joi.number().integer().allow(null).optional(),
+    customerId: Joi.number().integer().allow(null).optional(),
+    assignedSurveyorId: Joi.number().integer().allow(null).optional(),
+    assignedMoverId: Joi.number().integer().allow(null).optional(),
     customerName: Joi.string().max(100).optional(),
-    customerEmail: Joi.string().email().optional(),
-    customerPhone: Joi.string().max(15).optional(),
-    pickupAddress: Joi.string().optional(),
-    deliveryAddress: Joi.string().optional(),
+    customerEmail: Joi.string().email().allow(null).optional(),
+    customerPhone: Joi.string().max(20).allow(null).optional(),
+    pickupAddress: Joi.string().allow(null).optional(),
+    deliveryAddress: Joi.string().allow(null).optional(),
     jobDate: Joi.date().optional(),
-    status: Joi.string().valid('pending', 'scheduled', 'in_progress', 'completed', 'cancelled').optional(),
-    estimatedHours: Joi.number().optional(),
-    totalPrice: Joi.number().optional()
+    statusId: Joi.number().integer().optional(),
+    estimatedHours: Joi.number().precision(2).allow(null).optional(),
+    totalPrice: Joi.number().precision(2).allow(null).optional()
   }).min(1)
 };
 

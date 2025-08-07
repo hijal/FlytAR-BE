@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
-      source: {
+      source_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
@@ -70,7 +70,7 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true
       },
-      property_type: {
+      property_type_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
@@ -92,7 +92,7 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true
       },
-      status: {
+      status_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -103,7 +103,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       },
-      priority: {
+      priority_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -142,18 +142,30 @@ module.exports = {
       }
     });
 
-    await queryInterface.addIndex('leads', ['assigned_to_company_id']);
-    await queryInterface.addIndex('leads', ['assigned_to_employee_id']);
-    await queryInterface.addIndex('leads', ['assigned_by']);
-    await queryInterface.addIndex('leads', ['customer_email']);
-    await queryInterface.addIndex('leads', ['customer_phone']);
-    await queryInterface.addIndex('leads', ['status']);
-    await queryInterface.addIndex('leads', ['priority']);
-    await queryInterface.addIndex('leads', ['converted_to_job_id']);
-    await queryInterface.addIndex('leads', ['created_at']);
+    await queryInterface.addIndex('leads', ['source_id'], { name: 'idx_leads_source_id' });
+    await queryInterface.addIndex('leads', ['assigned_to_company_id'], { name: 'idx_leads_assigned_to_company_id' });
+    await queryInterface.addIndex('leads', ['assigned_to_employee_id'], { name: 'idx_leads_assigned_to_employee_id' });
+    await queryInterface.addIndex('leads', ['assigned_by'], { name: 'idx_leads_assigned_by' });
+    await queryInterface.addIndex('leads', ['customer_email'], { name: 'idx_leads_customer_email' });
+    await queryInterface.addIndex('leads', ['customer_phone'], { name: 'idx_leads_customer_phone' });
+    await queryInterface.addIndex('leads', ['status_id'], { name: 'idx_leads_status_id' });
+    await queryInterface.addIndex('leads', ['priority_id'], { name: 'idx_leads_priority_id' });
+    await queryInterface.addIndex('leads', ['converted_to_job_id'], { name: 'idx_leads_converted_to_job_id' });
+    await queryInterface.addIndex('leads', ['created_at'], { name: 'idx_leads_created_at' });
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.removeIndex('leads', 'idx_leads_source_id');
+    await queryInterface.removeIndex('leads', 'idx_leads_assigned_to_company_id');
+    await queryInterface.removeIndex('leads', 'idx_leads_assigned_to_employee_id');
+    await queryInterface.removeIndex('leads', 'idx_leads_assigned_by');
+    await queryInterface.removeIndex('leads', 'idx_leads_customer_email');
+    await queryInterface.removeIndex('leads', 'idx_leads_customer_phone');
+    await queryInterface.removeIndex('leads', 'idx_leads_status_id');
+    await queryInterface.removeIndex('leads', 'idx_leads_priority_id');
+    await queryInterface.removeIndex('leads', 'idx_leads_converted_to_job_id');
+    await queryInterface.removeIndex('leads', 'idx_leads_created_at');
+
     await queryInterface.dropTable('leads');
   }
 };

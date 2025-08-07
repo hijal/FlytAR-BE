@@ -59,9 +59,10 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false
       },
-      source: {
+      source_id: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        field: 'source_id',
         references: {
           model: 'lead_sources',
           key: 'id'
@@ -125,10 +126,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         field: 'delivery_address'
       },
-      propertyType: {
+      propertyTypeId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'property_type',
+        field: 'property_type_id',
         references: {
           model: 'property_types',
           key: 'id'
@@ -149,18 +150,20 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         field: 'estimated_price'
       },
-      status: {
+      statusId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'status_id',
         defaultValue: 1,
         references: {
           model: 'lead_statuses',
           key: 'id'
         }
       },
-      priority: {
+      priorityId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'priority_id',
         defaultValue: 2,
         references: {
           model: 'lead_priorities',
