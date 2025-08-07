@@ -5,28 +5,33 @@ module.exports = (sequelize, DataTypes) => {
   class Job extends Model {
     static associate(models) {
       Job.belongsTo(models.Company, {
-        foreignKey: 'companyId',
+        foreignKey: 'company_id',
         as: 'company'
       });
 
       Job.belongsTo(models.Lead, {
-        foreignKey: 'leadId',
+        foreignKey: 'lead_id',
         as: 'lead'
       });
 
       Job.belongsTo(models.User, {
-        foreignKey: 'customerId',
+        foreignKey: 'customer_id',
         as: 'customer'
       });
 
       Job.belongsTo(models.User, {
-        foreignKey: 'assignedSurveyorId',
+        foreignKey: 'assigned_surveyor_id',
         as: 'surveyor'
       });
 
       Job.belongsTo(models.User, {
-        foreignKey: 'assignedMoverId',
+        foreignKey: 'assigned_mover_id',
         as: 'mover'
+      });
+
+      Job.belongsTo(models.JobStatus, {
+        foreignKey: 'status_id',
+        as: 'status'
       });
     }
 

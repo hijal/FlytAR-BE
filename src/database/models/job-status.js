@@ -5,10 +5,10 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class JobStatus extends Model {
     static associate(models) {
-      JobStatus.belongsTo(models.Job, {
-        foreignKey: 'status',
-        as: 'job',
-        onDelete: 'CASCADE',
+      JobStatus.hasMany(models.Job, {
+        foreignKey: 'status_id',
+        as: 'jobs',
+        onDelete: 'RESTRICT',
         onUpdate: 'CASCADE'
       });
     }

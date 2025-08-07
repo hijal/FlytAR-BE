@@ -1,4 +1,4 @@
-const { Job } = require('../database/models');
+const { Job, Company, Lead, User, JobStatus } = require('../database/models');
 const { AppError } = require('../middleware/errorHandler');
 
 class JobService {
@@ -15,7 +15,16 @@ class JobService {
   }
 
   static async getJobById(id) {
-    const job = await Job.findByPk(id, {});
+    const job = await Job.findByPk(id, {
+      include: [
+        { model: Company, as: 'company' },
+        { model: Lead, as: 'lead' },
+        { model: User, as: 'customer' },
+        { model: User, as: 'surveyor' },
+        { model: User, as: 'mover' },
+        { model: JobStatus, as: 'status' }
+      ]
+    });
 
     if (!job) {
       throw new AppError('No job found with that ID', 404);
