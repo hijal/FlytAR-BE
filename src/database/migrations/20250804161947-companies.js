@@ -43,9 +43,15 @@ module.exports = {
         defaultValue: true
       },
       subscription: {
-        type: Sequelize.ENUM('basic', 'premium', 'enterprise'),
+        type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 'basic'
+        references: {
+          model: 'subscriptions',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
+        defaultValue: 1
       },
       created_by: {
         type: Sequelize.INTEGER,

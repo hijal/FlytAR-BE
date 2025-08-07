@@ -85,9 +85,15 @@ module.exports = {
         allowNull: false
       },
       status: {
-        type: Sequelize.ENUM('scheduled', 'in_progress', 'completed', 'cancelled'),
+        type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 'scheduled'
+        references: {
+          model: 'job_statuses',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
+        defaultValue: 1
       },
       estimated_hours: {
         type: Sequelize.DECIMAL(10, 2),

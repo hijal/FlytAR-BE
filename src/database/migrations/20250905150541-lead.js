@@ -11,8 +11,14 @@ module.exports = {
         allowNull: false
       },
       source: {
-        type: Sequelize.ENUM('website', 'referral', 'ads', 'other'),
-        allowNull: true
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'lead_sources',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       assigned_to_company_id: {
         type: Sequelize.INTEGER,
@@ -65,8 +71,14 @@ module.exports = {
         allowNull: true
       },
       property_type: {
-        type: Sequelize.ENUM('apartment', 'house', 'office', 'other'),
-        allowNull: true
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'property_types',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       residents_count: {
         type: Sequelize.INTEGER,
@@ -81,14 +93,26 @@ module.exports = {
         allowNull: true
       },
       status: {
-        type: Sequelize.ENUM('new', 'contacted', 'in_progress', 'closed', 'converted'),
+        type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 'new'
+        references: {
+          model: 'lead_statuses',
+          key: 'id'
+        },
+        defaultValue: 1,
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       priority: {
-        type: Sequelize.ENUM('low', 'medium', 'high', 'urgent'),
+        type: Sequelize.INTEGER,
         allowNull: false,
-        defaultValue: 'medium'
+        references: {
+          model: 'lead_priorities',
+          key: 'id'
+        },
+        defaultValue: 2,
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
       },
       contacted_at: {
         type: Sequelize.DATE,

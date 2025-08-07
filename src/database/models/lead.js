@@ -18,6 +18,26 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'assignedBy',
         as: 'assigner'
       });
+
+      Lead.hasOne(models.LeadSource, {
+        foreignKey: 'source',
+        as: 'source'
+      });
+
+      Lead.hasOne(models.PropertyType, {
+        foreignKey: 'propertyType',
+        as: 'propertyType'
+      });
+
+      Lead.hasOne(models.LeadStatus, {
+        foreignKey: 'status',
+        as: 'status'
+      });
+
+      Lead.hasOne(models.LeadPriority, {
+        foreignKey: 'priority',
+        as: 'priority'
+      });
     }
 
     toJSON() {
@@ -40,8 +60,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       source: {
-        type: DataTypes.ENUM('website', 'referral', 'ads', 'other'),
-        allowNull: true
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'lead_sources',
+          key: 'id'
+        }
       },
       assignedToCompanyId: {
         type: DataTypes.INTEGER,
@@ -102,9 +126,13 @@ module.exports = (sequelize, DataTypes) => {
         field: 'delivery_address'
       },
       propertyType: {
-        type: DataTypes.ENUM('apartment', 'house', 'office', 'other'),
+        type: DataTypes.INTEGER,
         allowNull: true,
-        field: 'property_type'
+        field: 'property_type',
+        references: {
+          model: 'property_types',
+          key: 'id'
+        }
       },
       residentsCount: {
         type: DataTypes.INTEGER,
@@ -122,14 +150,22 @@ module.exports = (sequelize, DataTypes) => {
         field: 'estimated_price'
       },
       status: {
-        type: DataTypes.ENUM('new', 'contacted', 'in_progress', 'closed', 'converted'),
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 'new'
+        defaultValue: 1,
+        references: {
+          model: 'lead_statuses',
+          key: 'id'
+        }
       },
       priority: {
-        type: DataTypes.ENUM('low', 'medium', 'high', 'urgent'),
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 'medium'
+        defaultValue: 2,
+        references: {
+          model: 'lead_priorities',
+          key: 'id'
+        }
       },
       contactedAt: {
         type: DataTypes.DATE,

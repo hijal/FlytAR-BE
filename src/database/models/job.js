@@ -135,9 +135,15 @@ module.exports = (sequelize, DataTypes) => {
         field: 'job_date'
       },
       status: {
-        type: DataTypes.ENUM('scheduled', 'in_progress', 'completed', 'cancelled'),
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: 'scheduled'
+        references: {
+          model: 'job_statuses',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
+        defaultValue: 1
       },
       estimatedHours: {
         type: DataTypes.DECIMAL(10, 2),
