@@ -10,6 +10,12 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
+      job_key: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        unique: true
+      },
       company_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

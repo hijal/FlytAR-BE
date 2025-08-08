@@ -34,10 +34,17 @@ module.exports = (sequelize) => {
   UserRole.init(
     {
       id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+      },
+      urKey: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
-        allowNull: false
+        field: 'ur_key',
+        allowNull: false,
+        unique: true
       },
       userId: {
         type: DataTypes.INTEGER,

@@ -5,9 +5,11 @@ const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.belongsTo(models.Role, {
-        foreignKey: 'role_id',
-        as: 'role'
+      User.belongsToMany(models.Role, {
+        through: models.UserRole,
+        foreignKey: 'user_id',
+        otherKey: 'role_id',
+        as: 'roles'
       });
       User.hasOne(models.Token, {
         foreignKey: 'user_id',
@@ -130,18 +132,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
         field: 'last_login'
-      },
-      roleId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 5,
-        field: 'role_id',
-        references: {
-          model: 'roles',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'RESTRICT'
       },
       companyId: {
         type: DataTypes.INTEGER,

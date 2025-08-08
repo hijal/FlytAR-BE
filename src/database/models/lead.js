@@ -59,6 +59,13 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false
       },
+      leadKey: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        unique: true,
+        defaultValue: DataTypes.UUIDV4,
+        field: 'lead_key'
+      },
       source_id: {
         type: DataTypes.INTEGER,
         allowNull: true,

@@ -54,6 +54,13 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false
       },
+      jobKey: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        unique: true,
+        defaultValue: DataTypes.UUIDV4,
+        field: 'job_key'
+      },
       companyId: {
         type: DataTypes.INTEGER,
         allowNull: false,

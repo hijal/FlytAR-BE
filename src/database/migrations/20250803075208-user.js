@@ -49,16 +49,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true
       },
-      role_id: {
-        type: Sequelize.INTEGER,
-        defaultValue: 5,
-        references: {
-          model: 'roles',
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'RESTRICT'
-      },
       company_id: {
         type: Sequelize.INTEGER,
         allowNull: true
@@ -83,7 +73,6 @@ module.exports = {
     await queryInterface.addIndex('users', ['email']);
     await queryInterface.addIndex('users', ['phone']);
     await queryInterface.addIndex('users', ['user_key']);
-    await queryInterface.addIndex('users', ['role_id']);
     await queryInterface.addIndex('users', ['invited_by']);
   },
 

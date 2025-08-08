@@ -10,6 +10,12 @@ module.exports = {
         autoIncrement: true,
         allowNull: false
       },
+      lead_key: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        unique: true
+      },
       source_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
