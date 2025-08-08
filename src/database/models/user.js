@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.belongsToMany(models.Role, {
         through: models.UserRole,
-        foreignKey: 'user_id',
-        otherKey: 'role_id',
+        foreignKey: { name: 'userId', field: 'user_id' },
+        otherKey: { name: 'roleId', field: 'role_id' },
         as: 'roles'
       });
       User.hasOne(models.Token, {
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     async getUserRole() {
-      return this.getRole();
+      return this.getRoles();
     }
 
     toJSON() {

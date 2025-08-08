@@ -59,7 +59,7 @@ module.exports = (sequelize) => {
       underscored: true,
       hooks: {
         async afterCreate(resource, options) {
-          const actions = ['create', 'get', 'update', 'delete'];
+          const actions = ['get', 'list', 'create', 'update', 'delete'];
           const Permission = sequelize.models.Permission;
 
           const permissions = actions.map((action) => ({

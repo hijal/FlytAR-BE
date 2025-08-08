@@ -93,6 +93,7 @@ const ERROR_STATUS_MAP = {
   SequelizeInvalidConnectionError: 500,
   SequelizeConnectionRefusedError: 500,
   SequelizeAccessDeniedError: 403,
+  AggregateError: 500,
 
   // PostgreSQL specific errors
   SequelizeEmptyResultError: 404,
@@ -124,6 +125,7 @@ const ERROR_MESSAGE_MAP = {
   SequelizeInvalidConnectionError: 'Invalid database connection',
   SequelizeConnectionRefusedError: 'Database connection refused',
   SequelizeAccessDeniedError: 'Database access denied',
+  AggregateError: 'Database operation failed',
 
   // PostgreSQL specific errors
   SequelizeEmptyResultError: 'Resource not found',

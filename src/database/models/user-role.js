@@ -64,15 +64,6 @@ module.exports = (sequelize) => {
           key: 'id'
         }
       },
-      assignedBy: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        field: 'assigned_by',
-        references: {
-          model: 'users',
-          key: 'id'
-        }
-      },
       assignedAt: {
         type: DataTypes.DATE,
         field: 'assigned_at',

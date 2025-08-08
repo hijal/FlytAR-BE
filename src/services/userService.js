@@ -19,7 +19,7 @@ class UserService {
   static async getUserById(id) {
     const user = await User.findByPk(id, {
       include: [
-        { model: Role, as: 'role' },
+        { model: Role, as: 'roles' },
         {
           model: Company,
           as: 'company'
@@ -33,18 +33,35 @@ class UserService {
   }
 
   static async createUser(userData) {
-    return await User.create(userData);
+    const user = await User.create(userData);
+
+    const roleId = userData.roleId || 5;
+    const role = await Role.findOne({ where: { id: roleId } });
+    await user.addRole(role);
+
+    return user;
   }
 
   static async updateUser(id, userData, currentUserId) {
     const user = await User.findByPk(id);
+
     if (!user) {
       throw new AppError('No user found with that ID', 404);
     }
+
     if (user.id !== currentUserId) {
       throw new AppError('You do not have permission to update this user', 401);
     }
-    return await user.update(userData);
+
+    const { roleIds, ...updateData } = userData;
+    const updatedUser = await user.update(updateData);
+
+    if (roleIds) {
+      const roles = await Role.findAll({ where: { id: roleIds } });
+      await user.setRoles(roles);
+    }
+
+    return updatedUser;
   }
 
   static async login(email, password) {

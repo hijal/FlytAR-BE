@@ -11,7 +11,7 @@ const userValidationSchema = {
     profilePicture: Joi.string().uri().optional(),
     roleId: Joi.number().integer().optional(),
     companyId: Joi.number().integer().optional(),
-    invitedBy: Joi.number().integer().optional(),
+    invitedBy: Joi.number().integer().optional()
   }),
 
   update: Joi.object({
@@ -22,7 +22,7 @@ const userValidationSchema = {
     phone: Joi.string().pattern(/^\+?[0-9]{7,15}$/),
     profilePicture: Joi.string().uri(),
     isActive: Joi.boolean(),
-    roleId: Joi.number().integer(),
+    roleIds: Joi.array().items(Joi.number().integer()).min(1).required(),
     companyId: Joi.number().integer(),
     invitedBy: Joi.number().integer()
   }).min(1),

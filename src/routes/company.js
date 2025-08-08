@@ -7,14 +7,16 @@ const {
   updateCompany
 } = require('../controllers/companyController');
 const { validate, companyValidationSchema } = require('./validation/company');
-const { protect } = require('../middleware/auth');
+const { authenticate } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', protect, getAllCompanies);
-router.get('/:id', protect, getCompanyById);
-router.post('/', validate(companyValidationSchema.create), protect, createCompany);
-router.patch('/:id', validate(companyValidationSchema.update), protect, updateCompany);
-router.delete('/:id', protect, deleteCompany);
+router.use(authenticate);
+
+router.get('/', getAllCompanies);
+router.get('/:id', getCompanyById);
+router.post('/', validate(companyValidationSchema.create), createCompany);
+router.patch('/:id', validate(companyValidationSchema.update), updateCompany);
+router.delete('/:id', deleteCompany);
 
 module.exports = router;

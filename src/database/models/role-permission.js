@@ -38,7 +38,8 @@ module.exports = (sequelize) => {
       sequelize,
       modelName: 'RolePermission',
       tableName: 'role_permissions',
-      timestamps: true
+      timestamps: true,
+      underscored: true
     }
   );
 

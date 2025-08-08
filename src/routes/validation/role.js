@@ -9,7 +9,8 @@ const roleValidationSchema = {
 
   update: Joi.object({
     name: Joi.string().min(2).max(50).optional(),
-    description: Joi.string().min(2).max(50).optional()
+    description: Joi.string().min(2).max(50).optional(),
+    permissionIds: Joi.array().items(Joi.number().integer()).optional()
   })
     .min(1)
     .messages({
