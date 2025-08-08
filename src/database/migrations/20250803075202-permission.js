@@ -22,9 +22,15 @@ module.exports = {
         unique: true,
         comment: 'Format: resource:action (e.g., account:get, transaction:create)'
       },
-      resource: {
-        type: Sequelize.STRING,
-        allowNull: false
+      resource_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'resources',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       action: {
         type: Sequelize.ENUM('get', 'list', 'create', 'update', 'delete'),
@@ -50,7 +56,7 @@ module.exports = {
     await queryInterface.addIndex('permissions', ['id']);
     await queryInterface.addIndex('permissions', ['per_key']);
     await queryInterface.addIndex('permissions', ['tag']);
-    await queryInterface.addIndex('permissions', ['resource']);
+    await queryInterface.addIndex('permissions', ['resource_id']);
     await queryInterface.addIndex('permissions', ['action']);
   },
 

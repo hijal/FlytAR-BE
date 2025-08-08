@@ -10,6 +10,10 @@ module.exports = (sequelize) => {
         otherKey: 'role_id',
         as: 'roles'
       });
+      Permission.belongsTo(models.Resource, {
+        foreignKey: 'resource_id',
+        as: 'resource'
+      });
     }
     toJSON() {
       const values = { ...this.get() };
@@ -52,9 +56,14 @@ module.exports = (sequelize) => {
           }
         }
       },
-      resource: {
-        type: DataTypes.STRING,
+      resourceId: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        field: 'resource_id',
+        references: {
+          model: 'resources',
+          key: 'id'
+        },
         validate: {
           notEmpty: {
             msg: 'Resource cannot be empty'

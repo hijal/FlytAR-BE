@@ -5,7 +5,6 @@ const { Model, DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   class Resource extends Model {
     static associate(models) {
-      // A resource has many permissions
       Resource.hasMany(models.Permission, {
         foreignKey: 'resource_id',
         as: 'permissions'
@@ -60,12 +59,12 @@ module.exports = (sequelize) => {
       underscored: true,
       hooks: {
         async afterCreate(resource, options) {
-          const actions = ['create', 'read', 'update', 'delete'];
+          const actions = ['create', 'get', 'update', 'delete'];
           const Permission = sequelize.models.Permission;
 
           const permissions = actions.map((action) => ({
             tag: `${resource.slug}:${action}`,
-            resource_id: resource.id, // match snake_case column
+            resource_id: resource.id,
             action,
             description: `${action.charAt(0).toUpperCase() + action.slice(1)} ${resource.name}`
           }));
