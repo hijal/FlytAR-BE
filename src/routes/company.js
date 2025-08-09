@@ -7,16 +7,16 @@ const {
   updateCompany
 } = require('../controllers/companyController');
 const { validate, companyValidationSchema } = require('./validation/company');
-const { authenticate } = require('../middleware/auth');
+const { authenticate, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
 router.use(authenticate);
 
-router.get('/', getAllCompanies);
-router.get('/:id', getCompanyById);
-router.post('/', validate(companyValidationSchema.create), createCompany);
-router.patch('/:id', validate(companyValidationSchema.update), updateCompany);
-router.delete('/:id', deleteCompany);
+router.get('/', authorize(['company:list']), getAllCompanies);
+router.get('/:id', authorize(['company:get']), getCompanyById);
+router.post('/', authorize(['company:create']), validate(companyValidationSchema.create), createCompany);
+router.patch('/:id', authorize(['company:update']), validate(companyValidationSchema.update), updateCompany);
+router.delete('/:id', authorize(['company:delete']), deleteCompany);
 
 module.exports = router;
