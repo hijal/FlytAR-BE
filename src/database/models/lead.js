@@ -202,7 +202,8 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Lead',
       tableName: 'leads',
       timestamps: true,
-      underscored: true
+      underscored: true,
+      paranoid: true
     }
   );
 

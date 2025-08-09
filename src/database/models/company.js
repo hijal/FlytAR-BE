@@ -131,7 +131,8 @@ module.exports = (sequelize) => {
       modelName: 'Company',
       tableName: 'companies',
       underscored: true,
-      timestamps: true
+      timestamps: true,
+      paranoid: true
     }
   );
 
