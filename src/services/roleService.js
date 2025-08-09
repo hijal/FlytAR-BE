@@ -50,6 +50,10 @@ class RoleService {
     if (!role) {
       throw new AppError('No role found with that ID', 404);
     }
+    const usersCount = await role.countUsers();
+    if (usersCount > 0) {
+      throw new AppError('Cannot delete role that is assigned to users', 400);
+    }
     return await role.destroy();
   }
 
@@ -91,6 +95,44 @@ class RoleService {
 
     await role.removePermissions(permissions);
     return role;
+  }
+
+  static async rolePermissions(roleId) {
+    const role = await Role.findByPk(roleId);
+
+    if (!role) {
+      throw new AppError('No role found with that ID', 404);
+    }
+
+    const allPermissions = await Permission.findAll({
+      attributes: ['id', 'tag']
+    });
+
+    if (role.slug === 'super-admin') {
+      return {
+        role: role.name,
+        permissions: allPermissions.map((p) => ({
+          id: p.id,
+          tag: p.tag,
+          assigned: true
+        }))
+      };
+    }
+
+    const assignedRolePermissions = await role.getPermissions({
+      attributes: ['id']
+    });
+
+    const assignedIds = new Set(assignedRolePermissions.map((p) => p.id));
+
+    return {
+      role: role.name,
+      permissions: allPermissions.map((p) => ({
+        id: p.id,
+        tag: p.tag,
+        assigned: assignedIds.has(p.id)
+      }))
+    };
   }
 }
 

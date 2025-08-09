@@ -9,25 +9,16 @@ const permissionValidationSchema = {
       .messages({
         'string.pattern.base': 'Tag must follow the format resource:action (e.g., user:create)'
       }),
-
-    resource: Joi.string().min(2).max(50).required(),
-
+    resourceId: Joi.number().required().messages({
+      'number.base': 'Resource ID must be a number',
+      'any.required': 'Resource ID is required'
+    }),
     action: Joi.string().valid('get', 'list', 'create', 'update', 'delete').required(),
-
     description: Joi.string().min(2).max(255).optional()
   }),
 
   update: Joi.object({
-    tag: Joi.string()
-      .pattern(/^[a-zA-Z0-9_-]+:[a-zA-Z0-9_-]+$/)
-      .messages({
-        'string.pattern.base': 'Tag must follow the format resource:action (e.g., user:create)'
-      }),
-
-    resource: Joi.string().min(2).max(50).optional(),
-
     action: Joi.string().valid('get', 'list', 'create', 'update', 'delete').optional(),
-
     description: Joi.string().min(2).max(255).optional()
   }).min(1)
 };

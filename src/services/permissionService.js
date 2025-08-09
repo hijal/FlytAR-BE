@@ -3,9 +3,7 @@ const { AppError } = require('../middleware/errorHandler');
 
 class PermissionService {
   static async getAllPermissions() {
-    const permissions = await Permission.findAll({
-      order: [['created_at', 'DESC']]
-    });
+    const permissions = await Permission.findAll();
 
     return {
       data: { permissions }
@@ -31,6 +29,11 @@ class PermissionService {
 
     if (!permission) {
       throw new AppError('No permission found with that ID', 404);
+    }
+
+    const rolesCount = await permission.countRoles();
+    if (rolesCount > 0) {
+      throw new AppError('Cannot delete permission that is assigned to roles', 400);
     }
 
     return await permission.destroy();

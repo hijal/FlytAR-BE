@@ -6,7 +6,8 @@ const {
   getAllRoles,
   getRoleById,
   assignPermissions,
-  removePermissions
+  removePermissions,
+  rolePermissions
 } = require('../controllers/roleController');
 const { validate, roleValidationSchema } = require('./validation/role');
 const { authenticate, authorize } = require('../middleware/auth');
@@ -20,6 +21,7 @@ router.get('/:id', authorize(['role:get']), getRoleById);
 router.post('/', authorize(['role:create']), validate(roleValidationSchema.create), createRole);
 router.patch('/:id', authorize(['role:update']), validate(roleValidationSchema.update), updateRole);
 router.delete('/:id', authorize(['role:delete']), deleteRole);
+router.get('/:id/permissions', authorize(['role:get']), rolePermissions);
 
 router.post(
   '/:id/permissions',

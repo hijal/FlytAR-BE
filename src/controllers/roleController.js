@@ -84,6 +84,18 @@ const removePermissions = async (req, res, next) => {
   }
 };
 
+const rolePermissions = async (req, res, next) => {
+  try {
+    const role = await RoleService.rolePermissions(req.params.id);
+    res.status(200).json({
+      status: 'success',
+      data: { role }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllRoles,
   getRoleById,
@@ -91,5 +103,6 @@ module.exports = {
   updateRole,
   deleteRole,
   assignPermissions,
-  removePermissions
+  removePermissions,
+  rolePermissions
 };

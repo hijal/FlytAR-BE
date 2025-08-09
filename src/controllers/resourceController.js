@@ -48,8 +48,21 @@ const deleteResource = async (req, res, next) => {
   }
 };
 
+const getResourceById = async (req, res, next) => {
+  try {
+    const resource = await ResourceService.getResourceById(req.params.id);
+    res.status(200).json({
+      status: 'success',
+      data: { resource }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllResources,
+  getResourceById,
   createResource,
   updateResource,
   deleteResource

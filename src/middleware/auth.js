@@ -72,15 +72,12 @@ const authorize = (requiredPermissions) => {
         return next(new AppError('You are not logged in! Please log in to get access', 401));
       }
 
-      const userPermissions = [];
+      if (req.user.roles.some((role) => role.slug === 'super-admin')) {
+        return next();
+      }
 
-      req.user.roles.forEach((role) => {
-        role.permissions.forEach((permission) => {
-          userPermissions.push(permission.tag);
-        });
-      });
-
-      const hasPermission = requiredPermissions.every((permission) => userPermissions.includes(permission));
+      const userPermissions = new Set(req.user.roles.flatMap((role) => role.permissions.map((p) => p.tag)));
+      const hasPermission = requiredPermissions.every((permission) => userPermissions.has(permission));
 
       if (!hasPermission) {
         return next(
@@ -99,25 +96,4 @@ const authorize = (requiredPermissions) => {
   };
 };
 
-const checkRole = (roles) => {
-  return async (req, res, next) => {
-    try {
-      if (!req.user) {
-        return next(new AppError('You are not logged in! Please log in to get access', 401));
-      }
-
-      const userRoles = req.user.roles.map((role) => role.name);
-      const hasRole = roles.some((role) => userRoles.includes(role));
-
-      if (!hasRole) {
-        return next(
-          new AppError(`You do not have permission to perform this action (required roles: ${roles.join(', ')})`, 403)
-        );
-      }
-    } catch (error) {
-      next(error);
-    }
-  };
-};
-
-module.exports = { signToken, authenticate, authorize, checkRole };
+module.exports = { signToken, authenticate, authorize };
