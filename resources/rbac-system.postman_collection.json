@@ -56,6 +56,52 @@
 					"response": []
 				},
 				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"roleIds\": [1, 2]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/delete/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"delete",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "{{userId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "me",
 					"request": {
 						"auth": {
@@ -297,7 +343,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Mover\",\n    \"description\": \"Handles moving operations\"\n}",
+							"raw": "{\n    \"name\": \"Customer\",\n    \"description\": \"End user of the system\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -313,6 +359,86 @@
 								"api",
 								"v1",
 								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assign permission",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"permissionIds\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/2/permissions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"2",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove permission",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"permissionIds\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/2/permissions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"2",
+								"permissions"
 							]
 						}
 					},
@@ -382,7 +508,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/roles/7",
+							"raw": "{{base_url}}/api/v1/roles/5",
 							"host": [
 								"{{base_url}}"
 							],
@@ -390,7 +516,7 @@
 								"api",
 								"v1",
 								"roles",
-								"7"
+								"5"
 							]
 						}
 					},
@@ -450,6 +576,37 @@
 								"v1",
 								"roles",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "permissions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/2/permissions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"2",
+								"permissions"
 							]
 						}
 					},
@@ -604,6 +761,36 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/resources/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -627,7 +814,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"tag\": \"user:create\",\n  \"resource\": \"user\",\n  \"action\": \"create\",\n  \"description\": \"Allows creation of a new user\"\n}\n",
+							"raw": "{\n  \"tag\": \"user:create\",\n  \"resourceId\": 2,\n  \"action\": \"create\",\n  \"description\": \"Allows creation of a new user\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -665,7 +852,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"tag\": \"user:create\",\n  \"resource\": \"user\",\n  \"action\": \"create\",\n  \"description\": \"Allows creation of a new user\"\n}\n",
+							"raw": "{\n  \"action\": \"create\",\n  \"description\": \"Allows creation of a new user\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -673,7 +860,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/permissions/1",
+							"raw": "{{base_url}}/api/v1/permissions/12",
 							"host": [
 								"{{base_url}}"
 							],
@@ -681,7 +868,7 @@
 								"api",
 								"v1",
 								"permissions",
-								"1"
+								"12"
 							]
 						}
 					},
