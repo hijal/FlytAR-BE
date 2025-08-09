@@ -26,7 +26,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"firstName\": \"John\"\n}",
+							"raw": "{\n  \"roleIds\": [1, 2]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -56,7 +56,7 @@
 					"response": []
 				},
 				{
-					"name": "details",
+					"name": "me",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -182,8 +182,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"packages": {},
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -192,7 +195,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"SecurePassword123!\",\n  \"phone\": \"{{$randomPhoneNumber}}\",\n  \"profilePicture\": \"{{$randomImageUrl}}\",\n  \"roleId\": 5\n}\n",
+							"raw": "{\n  \"firstName\": \"{{$randomFirstName}}\",\n  \"lastName\": \"{{$randomLastName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"password\": \"SecurePassword123!\",\n  \"phone\": \"{{$randomPhoneNumber}}\",\n  \"profilePicture\": \"{{$randomImageUrl}}\",\n  \"roleId\": 1\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -332,7 +335,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Mover\"\n}",
+							"raw": "{\n    \"permissionIds\": [1, 2, 3, 4, 5]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -340,7 +343,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/roles/4",
+							"raw": "{{base_url}}/api/v1/roles/1",
 							"host": [
 								"{{base_url}}"
 							],
@@ -348,7 +351,7 @@
 								"api",
 								"v1",
 								"roles",
-								"4"
+								"1"
 							]
 						}
 					},
@@ -417,6 +420,186 @@
 								"api",
 								"v1",
 								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"roles",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "resource",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"User\",\n  \"slug\": \"user\",\n  \"link\": \"/users\",\n  \"description\": \"Manages user creation, updates, and deletion.\",\n  \"isActive\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/resources",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"User Management\",\n  \"slug\": \"user-management\",\n  \"link\": \"/users\",\n  \"description\": \"Manages user creation, updates, and deletion.\",\n  \"isActive\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/resources/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"user\",\n    \"description\": \"Basic user access\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/resources/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/resources",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"resources"
 							]
 						}
 					},
@@ -594,7 +777,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"{{$randomCompanyName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"phone\": \"{{$randomPhoneNumber}}\",\n  \"address\": \"{{$randomStreetAddress}}\",\n  \"logoUrl\": \"{{$randomImageUrl}}\",\n  \"subscription\": \"premium\",\n  \"createdBy\": 1\n}\n",
+							"raw": "{\n  \"name\": \"{{$randomCompanyName}}\",\n  \"email\": \"{{$randomEmail}}\",\n  \"phone\": \"{{$randomPhoneNumber}}\",\n  \"address\": \"{{$randomStreetAddress}}\",\n  \"logoUrl\": \"{{$randomImageUrl}}\",\n  \"subscription\": 2,\n  \"createdBy\": 1\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -746,6 +929,348 @@
 								"api",
 								"v1",
 								"companies",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "lead",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"sourceId\": 1,\n  \"customerName\": \"{{$randomFullName}}\",\n  \"customerEmail\": \"{{$randomEmail}}\",\n  \"customerPhone\": \"{{$randomPhoneNumber}}\",\n  \"pickupAddress\": \"{{$randomStreetAddress}}\",\n  \"deliveryAddress\": \"{{$randomStreetAddress}}\",\n  \"propertyTypeId\": 1,\n  \"residentsCount\": 3,\n  \"movingDate\": \"2025-08-15\",\n  \"estimatedPrice\": 7000,\n  \"statusId\": 1,\n  \"priorityId\": 1,\n  \"contactedAt\": \"{{$randomDateFuture}}\",\n  \"notes\": \"Customer prefers weekend move.\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/leads",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"notes\": \"Customer prefers monthly move.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/leads/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"leads",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/leads/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"leads",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/leads",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"leads"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/leads/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"leads",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "job",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"companyId\": 1,\n  \"leadId\": 1,\n  \"customerId\": 1,\n  \"assignedSurveyorId\": 1,\n  \"assignedMoverId\": 1,\n  \"customerName\": \"{{$randomFullName}}\",\n  \"customerEmail\": \"{{$randomEmail}}\",\n  \"customerPhone\": \"{{$randomPhoneNumber}}\",\n  \"pickupAddress\": \"{{$randomStreetAddress}}\",\n  \"deliveryAddress\": \"{{$randomStreetAddress}}\",\n  \"jobDate\": \"{{$randomDateFuture}}\",\n  \"statusId\": 2,\n  \"estimatedHours\": 3.5,\n  \"totalPrice\": 1200.00\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/jobs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"totalPrice\": 5000.00\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/jobs/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jobs/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jobs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "details",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/jobs/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"jobs",
 								"1"
 							]
 						}
