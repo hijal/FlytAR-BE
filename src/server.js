@@ -7,7 +7,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
-const { env, port, clientUrl } = require('./config/app');
+const { env, port, allowedOrigins } = require('./config/app');
 const { sequelize } = require('./database/models');
 const { globalErrorHandler, AppError } = require('./middleware/errorHandler');
 
@@ -16,7 +16,15 @@ const app = express();
 app.use(helmet());
 app.use(
   cors({
-    origin: clientUrl || 'http://localhost:3000',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true
   })
 );

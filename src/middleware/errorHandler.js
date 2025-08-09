@@ -75,6 +75,7 @@ const ERROR_STATUS_MAP = {
   TokenExpiredError: 401,
   JsonWebTokenError: 401,
   NotBeforeError: 401,
+  CorsError: 403,
 
   // Sequelize Validation Errors
   SequelizeValidationError: 400,
@@ -107,6 +108,7 @@ const ERROR_MESSAGE_MAP = {
   TokenExpiredError: 'Your token has expired. Please log in again',
   JsonWebTokenError: 'Invalid token. Please log in again',
   NotBeforeError: 'Token not active yet',
+  CorsError: 'This origin is not allowed by CORS policy',
 
   // Sequelize Validation Errors
   SequelizeValidationError: 'Validation failed',
@@ -158,6 +160,9 @@ const processError = (err) => {
     error = handleJWTExpiredError();
   } else if (ERROR_STATUS_MAP[err.name]) {
     error = getErrorByName(err);
+  } else if (err.message === 'Not allowed by CORS') {
+    error = new AppError('This origin is not allowed by CORS policy', 403);
+    error.name = 'CorsError';
   } else {
     error = new AppError(err.message || 'Something went wrong!', err.statusCode || 500);
   }

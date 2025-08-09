@@ -11,7 +11,7 @@ const envSchema = Joi.object().keys({
   NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
   PORT: Joi.number().default(3000),
 
-  CLIENT_URL: Joi.string().default('http://localhost:3000'),
+  CLIENT_URLs: Joi.string().default('http://localhost:3000'),
 
   // jwt
   JWT_SECRET: Joi.string().required().description('JWT Secret key'),
@@ -49,5 +49,6 @@ module.exports = {
     database: envValue.DB_NAME,
     host: envValue.DB_HOST,
     dialect: envValue.DB_DIALECT
-  }
+  },
+  allowedOrigins: [envValue.CLIENT_URLs.split(','), 'http://localhost:3000', 'http://localhost:5173']
 };
