@@ -15,7 +15,26 @@ const roleValidationSchema = {
     .min(1)
     .messages({
       'object.min': 'At least one field must be provided for update'
-    })
+    }),
+
+  assignPermission: Joi.object({
+    permissionIds: Joi.array()
+      .items(Joi.number().integer())
+      .min(1)
+      .messages({
+        'object.min': 'At least one permission ID must be provided'
+      })
+      .required()
+  }),
+  removePermission: Joi.object({
+    permissionIds: Joi.array()
+      .items(Joi.number().integer())
+      .min(1)
+      .messages({
+        'object.min': 'At least one permission ID must be provided'
+      })
+      .required()
+  })
 };
 
 const validate = (schema, schemaType = 'body') => {

@@ -64,6 +64,14 @@ class UserService {
     return updatedUser;
   }
 
+  static async deleteUser(id) {
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new AppError('No user found with that ID', 404);
+    }
+    return await user.destroy();
+  }
+
   static async login(email, password) {
     const user = await User.findOne({ where: { email } });
     if (!user || !(await user.checkPassword(password))) {

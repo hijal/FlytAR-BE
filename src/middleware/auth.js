@@ -80,9 +80,7 @@ const authorize = (requiredPermissions) => {
         });
       });
 
-      const hasPermission = requiredPermissions.every((permission) => {
-        userPermissions.includes(permission);
-      });
+      const hasPermission = requiredPermissions.every((permission) => userPermissions.includes(permission));
 
       if (!hasPermission) {
         return next(
@@ -94,6 +92,7 @@ const authorize = (requiredPermissions) => {
           )
         );
       }
+      next();
     } catch (error) {
       next(error);
     }

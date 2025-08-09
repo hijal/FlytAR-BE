@@ -52,6 +52,46 @@ class RoleService {
     }
     return await role.destroy();
   }
+
+  static async assignPermissions(roleId, permissionData) {
+    const role = await Role.findByPk(roleId);
+
+    if (!role) {
+      throw new AppError('No role found with that ID', 404);
+    }
+
+    const { permissionIds } = permissionData;
+    const permissions = await Permission.findAll({
+      where: {
+        id: permissionIds
+      }
+    });
+
+    await role.setPermissions(permissions);
+    return role;
+  }
+
+  static async removePermissions(roleId, permissionData) {
+    const role = await Role.findByPk(roleId);
+
+    if (!role) {
+      throw new AppError('No role found with that ID', 404);
+    }
+
+    const { permissionIds } = permissionData;
+    const permissions = await Permission.findAll({
+      where: {
+        id: permissionIds
+      }
+    });
+
+    if (permissions.length === 0) {
+      throw new AppError('No permissions found with that ID', 404);
+    }
+
+    await role.removePermissions(permissions);
+    return role;
+  }
 }
 
 module.exports = RoleService;

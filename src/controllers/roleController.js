@@ -60,10 +60,36 @@ const deleteRole = async (req, res, next) => {
   }
 };
 
+const assignPermissions = async (req, res, next) => {
+  try {
+    const role = await RoleService.assignPermissions(req.params.id, req.body);
+    res.status(200).json({
+      status: 'success',
+      data: { role }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const removePermissions = async (req, res, next) => {
+  try {
+    const role = await RoleService.removePermissions(req.params.id, req.body);
+    res.status(200).json({
+      status: 'success',
+      data: { role }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllRoles,
   getRoleById,
   createRole,
   updateRole,
-  deleteRole
+  deleteRole,
+  assignPermissions,
+  removePermissions
 };

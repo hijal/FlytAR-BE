@@ -49,6 +49,18 @@ const updateUser = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    await UserService.deleteUser(req.params.id);
+    res.status(204).json({
+      status: 'success',
+      data: null
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -87,6 +99,7 @@ module.exports = {
   getUser,
   createUser,
   updateUser,
+  deleteUser,
   login,
   getMe
 };
