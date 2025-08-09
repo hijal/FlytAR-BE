@@ -58,6 +58,10 @@ module.exports = (sequelize) => {
           }
         }
       },
+      slug: {
+        type: DataTypes.STRING,
+        unique: true
+      },
       description: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -74,7 +78,12 @@ module.exports = (sequelize) => {
       modelName: 'Role',
       tableName: 'roles',
       timestamps: true,
-      underscored: true
+      underscored: true,
+      hooks: {
+        beforeCreate: (role) => {
+          role.slug = role.name.toLowerCase().replace(/ /g, '-');
+        }
+      }
     }
   );
 

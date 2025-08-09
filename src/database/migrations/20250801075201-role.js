@@ -21,6 +21,10 @@ module.exports = {
         allowNull: false,
         unique: true
       },
+      slug: {
+        type: Sequelize.STRING,
+        unique: true
+      },
       description: {
         type: Sequelize.STRING,
         allowNull: true
@@ -43,28 +47,33 @@ module.exports = {
 
     await queryInterface.bulkInsert('roles', [
       {
-        role_key: uuidv4(), // Generate UUID using uuid package
+        role_key: uuidv4(),
         name: 'Super Admin',
+        slug: 'super-admin',
         description: 'Has full access to the system'
       },
       {
         role_key: uuidv4(),
         name: 'Company Admin',
+        slug: 'company-admin',
         description: 'Administers company-specific resources'
       },
       {
         role_key: uuidv4(),
         name: 'Surveyor',
+        slug: 'surveyor',
         description: 'Responsible for surveys'
       },
       {
         role_key: uuidv4(),
         name: 'Mover',
+        slug: 'mover',
         description: 'Handles moving operations'
       },
       {
         role_key: uuidv4(),
         name: 'Customer',
+        slug: 'customer',
         description: 'End user of the system'
       }
     ]);

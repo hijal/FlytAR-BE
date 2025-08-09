@@ -14,11 +14,6 @@ module.exports = (sequelize) => {
         foreignKey: 'role_id',
         as: 'role'
       });
-
-      UserRole.belongsTo(models.User, {
-        foreignKey: 'assigned_by',
-        as: 'assignedByUser'
-      });
     }
     toJSON() {
       const values = { ...this.get() };
