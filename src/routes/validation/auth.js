@@ -22,7 +22,7 @@ const userValidationSchema = {
     phone: Joi.string().pattern(/^\+?[0-9]{7,15}$/),
     profilePicture: Joi.string().uri(),
     isActive: Joi.boolean(),
-    roleIds: Joi.array().items(Joi.number().integer()).min(1).required(),
+    roleIds: Joi.array().items(Joi.number().integer()).min(1),
     companyId: Joi.number().integer(),
     invitedBy: Joi.number().integer()
   }).min(1),
