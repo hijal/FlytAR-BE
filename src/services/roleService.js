@@ -3,15 +3,9 @@ const { AppError } = require('../middleware/errorHandler');
 
 class RoleService {
   static async getAllRoles() {
-    const roles = await Role.findAll({
-      order: [['created_at', 'DESC']]
-    });
+    const roles = await Role.findAll();
 
-    return {
-      data: {
-        roles
-      }
-    };
+    return roles;
   }
   static async createRole(roleData) {
     return await Role.create(roleData);

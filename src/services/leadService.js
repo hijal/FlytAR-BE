@@ -7,11 +7,7 @@ class LeadService {
       order: [['created_at', 'DESC']]
     });
 
-    return {
-      data: {
-        leads
-      }
-    };
+    return leads;
   }
 
   static async getLeadById(id) {
@@ -52,11 +48,7 @@ class LeadService {
       throw new AppError('No lead found with that ID', 404);
     }
 
-    return {
-      data: {
-        lead
-      }
-    };
+    return lead;
   }
 
   static async createLead(leadData) {

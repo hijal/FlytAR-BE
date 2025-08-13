@@ -3,10 +3,10 @@ const { jwt, env } = require('../config/app');
 
 const getAllUsers = async (req, res, next) => {
   try {
-    const result = await UserService.getAllUsers();
+    const users = await UserService.getAllUsers();
     res.status(200).json({
       status: 'success',
-      ...result
+      data: users
     });
   } catch (error) {
     next(error);
@@ -18,7 +18,7 @@ const getUser = async (req, res, next) => {
     const user = await UserService.getUserById(req.params.id);
     res.status(200).json({
       status: 'success',
-      data: { user }
+      data: user
     });
   } catch (error) {
     next(error);
@@ -30,7 +30,7 @@ const createUser = async (req, res, next) => {
     const user = await UserService.createUser(req.body);
     res.status(201).json({
       status: 'success',
-      data: { user }
+      data: user
     });
   } catch (error) {
     next(error);
@@ -42,7 +42,7 @@ const updateUser = async (req, res, next) => {
     const user = await UserService.updateUser(req.params.id, req.body, req.user.id);
     res.status(200).json({
       status: 'success',
-      data: { user }
+      data: user
     });
   } catch (error) {
     next(error);
@@ -75,8 +75,7 @@ const login = async (req, res, next) => {
     res.cookie('jwt', token, cookieOptions);
     res.status(200).json({
       status: 'success',
-      token,
-      data: { user }
+      data: { token }
     });
   } catch (error) {
     next(error);
@@ -87,7 +86,7 @@ const getMe = async (req, res, next) => {
   try {
     res.status(200).json({
       status: 'success',
-      data: { user: req.user }
+      data: req.user
     });
   } catch (error) {
     next(error);

@@ -3,15 +3,9 @@ const { AppError } = require('../middleware/errorHandler');
 
 class ResourceService {
   static async getAllResources() {
-    const resources = await Resource.findAll({
-      order: [['created_at', 'DESC']]
-    });
+    const resources = await Resource.findAll();
 
-    return {
-      data: {
-        resources
-      }
-    };
+    return resources;
   }
 
   static async createResource(resourceData) {

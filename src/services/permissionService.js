@@ -5,9 +5,7 @@ class PermissionService {
   static async getAllPermissions() {
     const permissions = await Permission.findAll();
 
-    return {
-      data: { permissions }
-    };
+    return permissions;
   }
 
   static async createPermission(permissionData) {

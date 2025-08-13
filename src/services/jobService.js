@@ -7,11 +7,7 @@ class JobService {
       order: [['created_at', 'DESC']]
     });
 
-    return {
-      data: {
-        jobs
-      }
-    };
+    return jobs;
   }
 
   static async getJobById(id) {
@@ -30,11 +26,7 @@ class JobService {
       throw new AppError('No job found with that ID', 404);
     }
 
-    return {
-      data: {
-        job
-      }
-    };
+    return job;
   }
 
   static async createJob(jobData) {

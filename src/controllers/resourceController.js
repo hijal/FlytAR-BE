@@ -2,10 +2,10 @@ const ResourceService = require('../services/resourceService');
 
 const getAllResources = async (req, res, next) => {
   try {
-    const result = await ResourceService.getAllResources();
+    const resources = await ResourceService.getAllResources();
     res.status(200).json({
       status: 'success',
-      ...result
+      data: resources
     });
   } catch (error) {
     next(error);
@@ -17,7 +17,7 @@ const createResource = async (req, res, next) => {
     const resource = await ResourceService.createResource(req.body);
     res.status(201).json({
       status: 'success',
-      data: { resource }
+      data: resource
     });
   } catch (error) {
     next(error);
@@ -29,7 +29,7 @@ const updateResource = async (req, res, next) => {
     const resource = await ResourceService.updateResource(req.params.id, req.body);
     res.status(200).json({
       status: 'success',
-      data: { resource }
+      data: resource
     });
   } catch (error) {
     next(error);
@@ -53,7 +53,7 @@ const getResourceById = async (req, res, next) => {
     const resource = await ResourceService.getResourceById(req.params.id);
     res.status(200).json({
       status: 'success',
-      data: { resource }
+      data: resource
     });
   } catch (error) {
     next(error);

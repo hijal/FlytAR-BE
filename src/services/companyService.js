@@ -3,16 +3,9 @@ const { AppError } = require('../middleware/errorHandler');
 
 class CompanyService {
   static async getAllCompanies() {
-    const companies = await Company.findAll({
-      order: [['created_at', 'DESC']],
-      include: ['creator']
-    });
+    const companies = await Company.findAll();
 
-    return {
-      data: {
-        companies
-      }
-    };
+    return companies;
   }
 
   static async getCompanyById(id) {
@@ -24,11 +17,7 @@ class CompanyService {
       throw new AppError('No company found with that ID', 404);
     }
 
-    return {
-      data: {
-        company
-      }
-    };
+    return company;
   }
 
   static async createCompany(companyData) {

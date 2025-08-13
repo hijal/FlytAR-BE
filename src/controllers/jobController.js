@@ -2,10 +2,10 @@ const JobService = require('../services/jobService');
 
 const getAllJobs = async (req, res, next) => {
   try {
-    const result = await JobService.getAllJobs();
+    const jobs = await JobService.getAllJobs();
     res.status(200).json({
       status: 'success',
-      ...result
+      data: jobs
     });
   } catch (error) {
     next(error);
@@ -14,10 +14,10 @@ const getAllJobs = async (req, res, next) => {
 
 const getJobById = async (req, res, next) => {
   try {
-    const result = await JobService.getJobById(req.params.id);
+    const job = await JobService.getJobById(req.params.id);
     res.status(200).json({
       status: 'success',
-      ...result
+      data: job
     });
   } catch (error) {
     next(error);
@@ -29,7 +29,7 @@ const createJob = async (req, res, next) => {
     const job = await JobService.createJob(req.body);
     res.status(201).json({
       status: 'success',
-      data: { job }
+      data: job
     });
   } catch (error) {
     next(error);
@@ -41,7 +41,7 @@ const updateJob = async (req, res, next) => {
     const job = await JobService.updateJob(req.params.id, req.body);
     res.status(200).json({
       status: 'success',
-      data: { job }
+      data: job
     });
   } catch (error) {
     next(error);

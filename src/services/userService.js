@@ -9,11 +9,7 @@ class UserService {
       order: [['created_at', 'DESC']]
     });
 
-    return {
-      data: {
-        users
-      }
-    };
+    return users;
   }
 
   static async getUserById(id) {
@@ -47,10 +43,6 @@ class UserService {
 
     if (!user) {
       throw new AppError('No user found with that ID', 404);
-    }
-
-    if (user.id !== currentUserId) {
-      throw new AppError('You do not have permission to update this user', 401);
     }
 
     const { roleIds, ...updateData } = userData;

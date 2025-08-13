@@ -2,10 +2,10 @@ const RoleService = require('../services/roleService');
 
 const getAllRoles = async (req, res, next) => {
   try {
-    const result = await RoleService.getAllRoles();
+    const roles = await RoleService.getAllRoles();
     res.status(200).json({
       status: 'success',
-      ...result
+      data: roles
     });
   } catch (error) {
     next(error);
@@ -17,7 +17,7 @@ const getRoleById = async (req, res, next) => {
     const role = await RoleService.getRoleById(req.params.id);
     res.status(200).json({
       status: 'success',
-      data: { role }
+      data: role
     });
   } catch (error) {
     next(error);
@@ -29,7 +29,7 @@ const createRole = async (req, res, next) => {
     const role = await RoleService.createRole(req.body);
     res.status(201).json({
       status: 'success',
-      data: { role }
+      data: role
     });
   } catch (error) {
     next(error);
@@ -41,7 +41,7 @@ const updateRole = async (req, res, next) => {
     const role = await RoleService.updateRole(req.params.id, req.body);
     res.status(200).json({
       status: 'success',
-      data: { role }
+      data: role
     });
   } catch (error) {
     next(error);
@@ -65,7 +65,7 @@ const assignPermissions = async (req, res, next) => {
     const role = await RoleService.assignPermissions(req.params.id, req.body);
     res.status(200).json({
       status: 'success',
-      data: { role }
+      data: role
     });
   } catch (error) {
     next(error);
@@ -77,7 +77,7 @@ const removePermissions = async (req, res, next) => {
     const role = await RoleService.removePermissions(req.params.id, req.body);
     res.status(200).json({
       status: 'success',
-      data: { role }
+      data: role
     });
   } catch (error) {
     next(error);
@@ -89,7 +89,7 @@ const rolePermissions = async (req, res, next) => {
     const role = await RoleService.rolePermissions(req.params.id);
     res.status(200).json({
       status: 'success',
-      data: { role }
+      data: role
     });
   } catch (error) {
     next(error);
